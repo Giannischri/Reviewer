@@ -1,0 +1,17 @@
+<div class="container">
+        <h3>Thank You for Registering</h3>
+        <div class="formGroup" *ngIf="auth.userData as user">
+          <p class="text-center">We have sent a confirmation email to <strong>{{user.email}}</strong>.</p>
+          <p class="text-center">Please check your email and click on the link to verfiy your email address.</p>
+        </div>
+        <div class="formGroup">
+          <button type="button" class="btn btnPrimary" (click)="auth.SendVerificationMail()">
+            <i class="fas fa-redo-alt"></i>
+            Resend Verification Email
+          </button>
+        </div>
+      <div class="redirectToLogin">
+        <span>Go back to?<span class="redirect" routerLink="/sign-in"> Sign in</span></span>
+      </div>
+    
+  </div>

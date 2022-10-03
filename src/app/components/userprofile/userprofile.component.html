@@ -1,0 +1,16 @@
+<div class="container" fxLayout="column" fxLayoutAlign="center center">
+  <mat-label >User-Profile</mat-label>
+    <mat-form-field  class="form-control" appearance="outline">
+        <mat-label>E-mail</mat-label>
+        <input matInput  [value]="this.usr.email" > 
+      </mat-form-field>
+      <mat-form-field  class="form-control" appearance="outline">
+        <mat-label>First-name</mat-label>
+        <input matInput  [value]="this.usr.firstname" > 
+      </mat-form-field>
+      <mat-form-field  class="form-control" appearance="outline">
+        <mat-label>Second name</mat-label>
+        <input matInput  [value]="this.usr.secondname" > 
+      </mat-form-field>
+      <mat-checkbox class="example-margin" [checked]="this.usr.emailVerified!">Verified</mat-checkbox>
+    </div>

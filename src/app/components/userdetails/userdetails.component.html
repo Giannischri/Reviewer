@@ -1,0 +1,63 @@
+
+<div *ngIf="currentuser" class="edit-form">
+    <h4>User info</h4>
+    <form [formGroup]="form" >
+      
+      <div class="form-group" fxLayout="column" fxLayoutAlign="space-around center">
+        <label for="firstname">Firstname</label>
+        <input
+          type="text"
+          class="form-control"
+          formControlName="firstname"
+          name="firstname"
+        />
+      </div>
+      <div class="form-group" fxLayout="column" fxLayoutAlign="space-around center">
+        <label for="secondname">Secondname</label>
+        <input
+          type="text"
+          class="form-control"
+          id="secondname"
+          formControlName="secondname"
+          name="secondname"
+        />
+      </div>
+      <div class="form-group" fxLayout="column" fxLayoutAlign="space-around center">
+        <label for="email">E-Mail</label>
+        <input
+          type="text"
+          class="form-control"
+          id="email"
+          formControlName="email"
+          name="email"
+        />
+      </div>
+      <div class="form-group" fxLayout="column" fxLayoutAlign="space-around center">
+        <section class="example-section" >
+          <h4>Select roles :</h4>
+          <p fxLayout="column" fxLayoutAlign="space-around center"><mat-checkbox  formControlName="plainuser" [checked]="this.form.get('plainuser')?.value" name="rev" >Candidate</mat-checkbox></p>
+          <p fxLayout="column" fxLayoutAlign="space-around center"><mat-checkbox  formControlName="simple" [checked]="this.form.get('simple')?.value" name="rev" >Employee</mat-checkbox></p>
+          <p fxLayout="column" fxLayoutAlign="space-around center"><mat-checkbox  formControlName="ranker" [checked]="this.form.get('ranker')?.value" name="rev" >Ranker</mat-checkbox></p>
+          <p fxLayout="column" fxLayoutAlign="space-around center"><mat-checkbox  formControlName="editor"  [checked]="this.form.get('editor')?.value" name="edit" >Editor</mat-checkbox></p>
+          <p fxLayout="column" fxLayoutAlign="space-around center"><mat-checkbox  formControlName="admin"[checked]="this.form.get('admin')?.value" name="adm" >Admin</mat-checkbox></p>
+        </section>
+     
+</div>
+
+      
+    
+      
+    </form>
+    
+    <button mat-stroked-button color="primary" class="outline" >
+      Delete
+    </button>
+    <button mat-stroked-button color="primary" type="submit" class="badge badge-success" (click)="updateTutorial()">
+      Update
+    </button>
+    <p>{{ message }}</p>
+  </div>
+  <div *ngIf="!currentuser">
+    <br />
+    <p>Cannot access this user...</p>
+  </div>

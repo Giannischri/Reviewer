@@ -1,0 +1,54 @@
+<h1 mat-dialog-title>Choose Project</h1>
+<div mat-dialog-content>
+    <div class="containsearch">
+    <div class="input-group rounded test">
+        <input type="text" placeholder="Search" mat-button [(ngModel)]="cardsearch" matInput required>
+        <span class="input-group-text border-0">
+          <i class="fas fa-search"></i>
+        </span>
+    </div>
+    <cdk-virtual-scroll-viewport #scrollViewport class="example-viewport " itemSize="60" appendOnly>
+        <ul style="color:black; list-style: none;" class="list-group-item list-group-item-action active" *cdkVirtualFor="let item of cardsarray  | filter : cardsearch; ">
+            <li (click)="add_card(item)  ">
+                <div fxLayout="column" >
+                <div class="example-container">
+                    
+                    <dd class="example-dd "><b>{{item.Title}}</b>
+                    <dd class="example-dd "><small>{{item.Description}}</small> </dd>
+                    <dd class="example-dd ">Project_Manager : <small>{{item.Project_Manager}}</small></dd>
+                    
+                        <div fxLayout="row" fxLayoutAlign="start center" >
+                            <dd class="example-dd ">Rankers :
+                                <div fxLayout="row" fxLayoutAlign="start center" >
+                            <small *ngFor="let ranker of item.Rankers">{{ranker.email   }}  &nbsp; </small>
+                        </div>
+                        </dd>
+                            <dd class="example-dd ">Candidates :
+                                <div fxLayout="row" fxLayoutAlign="start center" >
+                                <small *ngFor="let cand of item.Candidates">{{cand.email   }} &nbsp;</small>
+                            </div>
+                            </dd>
+                        
+                        </div>
+                   
+                       
+                           
+                       
+                     
+                </div>
+               
+            </div> 
+            <div fxLayout="column"  >
+               <!-- <img src="../../assets/logo.png" >-->
+                </div>
+            </li>
+        </ul>
+    </cdk-virtual-scroll-viewport>
+</div>
+</div>
+
+    <div fxLayout="row" fxLayoutAlign="center end" >
+    <button mat-raised-button mat-dialog-close >Close</button>
+    <button mat-raised-button  mat-dialog-close >Ok</button>
+
+</div>

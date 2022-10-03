@@ -1,0 +1,23 @@
+<h1 mat-dialog-title>Add Users</h1>
+<div mat-dialog-content>
+    <div class="input-group rounded test">
+        <input type="text" placeholder="Search" mat-button [(ngModel)]="project_manager_search" matInput required>
+        <span class="input-group-text border-0">
+          <i class="fas fa-search"></i>
+        </span>
+    </div>
+    <cdk-virtual-scroll-viewport #scrollViewport class="example-viewport " itemSize="60" appendOnly>
+        <ul style="color:black; list-style: none;" class="list-group-item list-group-item-action active  " *cdkVirtualFor="let item of UsersArray  | filter : project_manager_search; ">
+            <li (click)="add_Project_Manager(item.key,item.secondname,item.firstname,item.email) ">
+                <div class="example-container">
+                    <dd class="example-dd ">Name : {{item.firstname}}&nbsp; {{item.secondname}}</dd>
+                    <dd class="example-dd ">Email : {{item.email}}</dd>
+                </div>
+            </li>
+        </ul>
+    </cdk-virtual-scroll-viewport>
+</div>
+<div mat-dialog-actions>
+    <button mat-button mat-dialog-close (click)="closeDialog(1)">Close</button>
+    <button mat-button style="margin-left: 200px;" mat-dialog-close (click)="closeDialog(2)">Ok</button>
+</div>

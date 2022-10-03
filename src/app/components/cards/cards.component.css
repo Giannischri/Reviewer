@@ -1,0 +1,26 @@
+
+.mat-card-content{
+    height:40px;
+}
+.mat-card-actions{
+    height:70px;
+}
+.mat-card{
+    border: 2px solid black;
+    box-sizing: content-box;
+    box-shadow: 5px 5px 30px 5px #673AB7;
+    transition: all 0.3s ease 0s;
+}
+.mat-form-field{
+    background-color: aliceblue;
+    box-shadow: 5px 5px 30px 5px #673AB7;
+    margin-bottom: 20px;
+    height:60px;
+}
+
+.mat-icon{
+    height:20px!important;
+    width:20px !important;
+    
+    font-size:20px !important;
+}

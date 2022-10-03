@@ -1,0 +1,53 @@
+<div class="container">
+  <form [formGroup]="loginform" (ngSubmit)="onSubmit()">
+    
+      <div fxLayout="column" fxLayoutAlign="space-around center" >
+        <div fxLayout="row" fxLayoutAlign="space-between center" >
+      <h3 >Welcome back!Please login</h3>
+     
+      <button type="button" class="btn-close">
+        <span class="icon-cross"></span>
+        <span class="visually-hidden">Close</span>
+      </button> 
+      </div>
+    
+    <img class="logo" src="assets/logo.png" alt="Girl in a jacket"  >
+
+      <mat-form-field appearance="outline">
+        <mat-label>E-mail</mat-label>
+        <input matInput placeholder="Placeholder" formControlName="username"  >
+      </mat-form-field>
+    
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" placeholder="Placeholder" formControlName="password" >
+      </mat-form-field>
+
+    </div>
+    
+    
+    
+      <div class="signbtn">
+      <div fxLayout="column" fxLayoutAlign="space-around center" >
+      <a  (click)="onSubmit()" class="animated-button1">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        Log In
+      </a>
+      <mat-divider></mat-divider>
+        
+          
+          <cool-google-button color="dark" (click)="authService.GoogleAuth()">
+            Login with Google
+          </cool-google-button>
+        
+      
+      <mat-divider></mat-divider>
+      <a class="redirect" routerLink="/forgot-password">
+        Did you forget your password?We will help you recover it</a>
+      </div>
+    </div>   
+    </form>
+  </div>

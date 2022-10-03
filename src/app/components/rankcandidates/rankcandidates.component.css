@@ -1,0 +1,52 @@
+.container{
+    position:absolute!important;
+    top:10%;
+      left:25%;
+      text-align: center;
+      min-height:50%;
+      min-width:50%;
+      width:auto;
+      background-color: white;
+      border:2px solid black;
+      box-sizing: content-box;
+      box-shadow: 5px 5px 3px #673AB7;
+      transition: all 0.3s ease 0s;
+      display: inline-block;
+      z-index:2;
+      overflow: auto;
+      
+      
+  }
+  .mat-form-field{
+    width: 500px;
+  }
+  .children-invisible {
+    display: none;
+  }
+ 
+.desc-class{
+      width:60%;
+      height:20%;
+      margin-top:20px;
+  }
+  .mat-form-field{
+     width:70%;
+     height:60%;
+    margin-top: 2px;
+    margin-bottom: -1.25em;
+  }
+  .weight-class{
+    width:80%;
+    font-size: large;
+    text-align: center;
+  }
+  .weight-class2{
+    width:80%;
+    font-size: large;
+    text-align: center;
+  }
+  .score-class{
+    width:100%;
+    font-size: large;
+    text-align: center;
+  }

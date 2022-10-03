@@ -1,0 +1,68 @@
+        <div dir="rtl" class="search-bar" fxLayoutGap="20px">
+          <mat-form-field  appearance="fill">
+            <mat-label>Project Search</mat-label>
+            <input mat-button (click)="searchcards()"  matInput  />
+            <button matSuffix mat-button><mat-icon >search</mat-icon></button>
+          </mat-form-field>
+        </div>
+      <div fxLayout="row wrap" fxLayoutGap="17px grid">
+        
+        <div fxFlex="25%" fxFlex.xs="90%" fxFlex.sm="33%" *ngFor="let post of posts ">
+          <mat-card class="card " >
+            <div fxLayout="column">
+            <mat-card-header >
+              <div fxLayout="row" fxLayoutAlign="center start" >
+                
+                <mat-card-title >{{post.Title}}</mat-card-title>
+                <mat-icon *ngIf="post.Finalized">done_outline</mat-icon>
+                <mat-icon *ngIf="!post.Open">lock</mat-icon>
+                
+               
+          </div>
+          
+            </mat-card-header>
+            <mat-card-subtitle>Manager:{{post.Project_Manager}}</mat-card-subtitle>
+            
+            
+            <mat-card-content>
+            {{post.Description}}
+            
+            <div fxLayout="row" fxLayoutAlign="start start" >
+              <button mat-button color="accent" *ngIf="this.auth.getrole()=='admin' || (post.Open && !iscandidate(post))  || (!post.Open && isranker(post)) || (!post.Open && iseditor(post)) "  (click)="showcands(post)">Candidates</button>
+              <button mat-button color="primary" *ngIf=" this.auth.getrole()=='admin' || post.Open || (!post.Open && isranker(post)) || (!post.Open && iseditor(post))" (click)="showrankers(post)">Rankers</button>
+             
+              </div>
+            </mat-card-content>
+            <mat-card-actions>
+             
+              <div fxLayout="column" fxLayoutAlign="center center" >
+                
+                <div fxLayout="row" fxLayoutAlign="center start" >
+                <button mat-raised-button color="primary"  *ngIf="!iseditor(post) || this.auth.getrole()!='editor'"  [routerLink]="['/cards',post.key]"  >View<mat-icon>pageview</mat-icon></button>
+                
+                <button   mat-raised-button  color="primary" *ngIf="this.auth.getrole()=='admin'"   [routerLink]="['/project-build',post.key]">
+                  <mat-icon>settings</mat-icon>
+              </button> 
+              <button   mat-raised-button  color="primary" *ngIf="this.auth.getrole()=='editor' && iseditor(post)"   [routerLink]="['/cards',post.key]">
+                 <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-raised-button color="primary" *ngIf="this.auth.getrole()=='ranker' && isranker(post)" [routerLink]="['/rank-candidates',post.key]">Rank</button>
+        
+            <button   mat-raised-button color="primary" *ngIf="!post.Finalized && ((iseditor(post) && this.auth.getrole()=='editor') || this.auth.getrole()=='admin')" (click)="this.treesrv.finalizeproject(post)">Finalize</button>
+            <button   mat-raised-button color="primary" *ngIf="post.Finalized" (click)="exportcsv(post)"><mat-icon> import_export</mat-icon></button>
+                </div>
+                <div fxLayout="column" fxLayoutAlign="center center" >
+                  
+              
+              <button mat-raised-button color="accent" *ngIf="this.auth.getrole()=='viewer' && !iscandidate(post) "  [disabled]="!post.Open || post.Finalized "   (click)="insertCandidate(post)">Become Candidate</button>
+              <button mat-icon-button disabled></button>
+              </div>
+              <button mat-icon-button disabled></button>
+              </div>
+            </mat-card-actions>
+          </div>
+          
+          </mat-card>
+        </div>
+      </div>
+    

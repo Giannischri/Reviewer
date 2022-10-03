@@ -1,0 +1,42 @@
+
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <button mat-icon-button>
+        <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
+      </button>
+      <h1>Reviewer</h1>
+      <span class="menu-spacer"></span>
+      <div>
+        <a mat-button [routerLink]="'/cards'"> Projects </a>
+        <a mat-button *ngIf="auth.getrole()=='admin'" [routerLink]="'/project-build'"> Build a Project </a>   
+        <a mat-button *ngIf="auth.getrole()=='editor'"  [routerLink]="['/cards-edit','2']" >Edit Project Criteria</a>  
+        <a mat-button *ngIf="auth.getrole()=='ranker'" [routerLink]="'/rank-candidates'" >Rank Candidates </a>  
+        <a mat-button *ngIf="auth.getrole()=='admin'"   routerLink="/adminpanel" >Admin </a>
+      </div>
+      <div class="left-side-toolbar">
+        <a mat-button *ngIf="!auth.isLogged" routerLink='/sign-in' > Login </a>
+        <a mat-button *ngIf="!auth.isLogged" routerLink='/register-user' >Sign up </a>
+        <!--<a mat-button *ngIf="auth.isLogged" routerLink='/userprofile'  >Profile</a>-->
+        <a mat-button   (click)="auth.SignOut()" *ngIf="auth.isLogged"  >Signout </a>
+      </div>
+    </mat-toolbar-row>
+    
+  
+</mat-toolbar>
+<mat-sidenav-container>
+  <mat-sidenav #sidenav>
+    <mat-nav-list>
+      <div fxLayout="column">
+      <a mat-button [routerLink]="'/cards'"> Projects </a>
+      <a mat-button [routerLink]="'/project-build'"> Build a Project </a>   
+      <a mat-button  [routerLink]="['/cards-edit','2']" >Edit Project Criteria</a>  
+      <a mat-button  [routerLink]="'/rank-candidates'" >Rank Candidates </a>  
+      <a mat-button   routerLink="/adminpanel" >Admin </a>
+    </div>
+    </mat-nav-list>
+  </mat-sidenav>
+  
+  <mat-sidenav-content>
+</mat-sidenav-content>
+
+</mat-sidenav-container>

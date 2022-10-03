@@ -1,0 +1,71 @@
+<div class="container"  >
+  <form novalidate [formGroup]="signupform"  (ngSubmit)="onSubmit()">
+    <mat-dialog-content  >
+      <div class="upperblock">
+      <h2 mat-dialog-title style="text-align:center">Sign Up</h2>
+    
+    <button type="button" class="btn-close" >
+      <span class="icon-cross"></span>
+      <span class="visually-hidden">Close</span>
+    </button> 
+  </div>
+  <img src="assets/logo.png" class="logo">
+  
+      
+        <div fxLayout="row" fxLayoutAlign="space-around center" >
+        <mat-form-field id="fnamebox" appearance="outline">
+          <mat-label>First Name</mat-label>
+          <input matInput formControlName="firstname" placeholder="First Name" #userfirstname
+          >
+        </mat-form-field>
+  
+        <mat-form-field id="snamebox" appearance="outline">
+          <mat-label>Second Name</mat-label>
+          <input matInput formControlName="secondname" placeholder="Second Name" #usersecondname
+          >
+        </mat-form-field>
+      </div>
+      
+      <p>
+        <mat-form-field appearance="outline">
+          <mat-label>E-Mail</mat-label>
+          <input  matInput formControlName="email" placeholder="E-Mail" #useremail
+          required>
+        </mat-form-field>
+      </p>
+      <div fxLayout="row" fxLayoutAlign="space-around center" >
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input type="password" matInput formControlName="password" placeholder="Password" #userpwd
+          required>
+          
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Re-type Password</mat-label>
+          <input type="password" matInput formControlName="password2"placeholder="Re-Enter Password"  #userpwd2
+          required>
+          
+        </mat-form-field>
+      </div>
+    
+    </mat-dialog-content>
+    
+    <mat-dialog-actions>
+      <div class="signbtn"  >
+      <button type="submit" 
+      class="animated-button1">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        Sign Up
+      </button>
+      </div>
+    
+      <a class="redirect" routerLink="/sign-in">
+        Already have an account?Log In</a>
+    </mat-dialog-actions>
+  </form>
+    </div>
+ 
+  

@@ -1,0 +1,94 @@
+<mat-dialog-content>
+  <form novalidate [formGroup]="criteriaform" #formDirective="ngForm" (ngSubmit)="onSubmit(formDirective)">
+  <div fxLayout="column" fxLayoutAlign="space-around center">
+    <mat-form-field  class="form-control" id="titlef"  appearance="outline">
+      <mat-label>Title</mat-label>
+      <input  formControlName="title" matInput required
+      >
+    </mat-form-field>
+</div>
+<div fxLayout="column" fxLayoutAlign="space-around center">
+    <mat-form-field  class="form-control" id="descf"  appearance="outline">
+      <mat-label>Description</mat-label>
+      <input   formControlName="description" matInput
+      >
+    </mat-form-field>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="center center">
+    <mat-form-field class="form-control" appearance="outline">
+      <mat-label>Direction of Values</mat-label>
+      <mat-select formControlName="direction">
+        <mat-option  *ngFor="let direction of directions" [value]="direction">
+          {{direction}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="form-control"  appearance="outline">
+      <mat-label>Criteria weight</mat-label>
+    <input matInput formControlName="weight"  class="weight-class"  min="0" max="100" step="0.1" type="number" placeholder="Placeholder"  required>
+    <mat-hint *ngIf="this.criteriaform.get('weight')!.errors?.['pattern']">Ranges:[1-100],[0.1-1]</mat-hint>
+  
+  </mat-form-field>
+ 
+  </div>
+<div  fxLayout="column" fxLayoutAlign="space-around center">
+
+  <div  fxLayout="row" fxLayoutAlign="space-around center">
+    <mat-tab-group  mat-align-tabs="start" >
+      <mat-tab [disabled]="hiderange"   label="Range of values" >
+         <mat-form-field   class="form-control" appearance="outline">
+        <mat-label>Min value </mat-label>
+        <input (click)="rangesettrue()"    matInput formControlName="min">
+      </mat-form-field>
+      <mat-form-field  class="form-control" appearance="outline">
+        <mat-label>Max value </mat-label>
+        <input  matInput (click)="rangesettrue()"  formControlName="max"  >
+      </mat-form-field>
+    </mat-tab>
+      <mat-tab  label="Set of numbers with characters" [disabled]="hideset">
+        <mat-form-field  class="form-control" appearance="outline">
+          <mat-label>String:</mat-label>
+          <input (click)="numcharsettrue()"  matInput  formControlName="stringitem" > 
+        </mat-form-field>
+      <mat-form-field  class="form-control" appearance="outline">
+        <mat-label>Assign values</mat-label>
+        <input matInput (click)="numcharsettrue()" formControlName="numitem" > 
+      </mat-form-field>
+      </mat-tab>
+      <mat-tab  label="Set of numbers" [disabled]="hidenums">
+        <mat-form-field  class="form-control" appearance="outline">
+          <mat-label>Assign values</mat-label>
+          <input (click)="numbersettrue()"   matInput  formControlName="numitem" > 
+        </mat-form-field>
+      </mat-tab>
+    </mat-tab-group>
+    </div>
+    
+  <button mat-button (click)="additemlist($event)" type="button"><mat-icon style="color:blueviolet">add</mat-icon></button>
+  </div>  
+   
+      
+  <div fxLayout="column" fxLayoutAlign="space-around center">
+
+  <mat-label>Chosen numbers:</mat-label>
+  <mat-chip-list *ngIf="!critrange"  aria-label="Fruit selection">
+    <mat-chip *ngFor="let item of numlist" (removed)="remove(item)" >
+      {{item}}
+      <button matChipRemove>
+        <mat-icon>cancel</mat-icon>
+      </button>
+    </mat-chip>
+    </mat-chip-list>
+    <p *ngIf="critrange">[{{critrange.min+','+critrange.max}}]</p>
+    <button *ngIf="critrange" (click)="deleterange()">delete</button>
+  </div>
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <mat-checkbox formControlName="subjective" >Subjective</mat-checkbox>
+        <div class="space"></div>
+        <mat-checkbox formControlName="important" >Important</mat-checkbox>
+        <div class="space"></div>
+    <button mat-button mat-fab color="primary" [disabled]="!criteriaform.valid" type="submit">Primary</button>
+  </div>
+
+    </form>
+</mat-dialog-content>

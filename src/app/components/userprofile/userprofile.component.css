@@ -1,0 +1,19 @@
+.container{
+    position: absolute!important;
+    top:10%;
+      left:30%;
+      text-align: center;
+      min-width: 40%;
+      min-height:50%;
+      background-color: white;
+      border:2px solid black;
+      border-radius: 25px;
+      box-sizing:border-box;
+      box-shadow: 5px 5px 3px #673AB7;
+      transition: all 0.3s ease 0s;
+      display: inline-block;
+      z-index:2;
+      
+      
+      
+  }

@@ -1,0 +1,31 @@
+<mat-dialog-content>
+    <h3>
+      <div fxLayout="row">
+        <div fxLayout="column" *ngIf="this.error_msg[1]==1" >
+          Candidates:
+          <mat-chip-list  class="mat-chip-list-stacked"  aria-label="Color selection">
+            <mat-chip *ngFor="let cand of this.error_msg[0]"  class="example-box" selected color="accent">
+              {{cand.email}}
+            </mat-chip>
+          </mat-chip-list>
+        </div>
+       
+        <div fxLayout="column"  *ngIf="this.error_msg[1]==2">
+          Rankers:
+          <mat-chip-list  aria-label="Color selection">
+            <mat-chip *ngFor="let ranker of this.error_msg[0]"  class="example-box" selected color="primary">
+              {{ranker.email}}
+            </mat-chip>
+          </mat-chip-list>
+        </div>
+        
+      </div>
+      <strong *ngIf="hoverImage">
+        {{error_msg}}
+      </strong>
+    </h3>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+  
+    <button mat-button mat-dialog-close>Close</button>
+  </mat-dialog-actions>

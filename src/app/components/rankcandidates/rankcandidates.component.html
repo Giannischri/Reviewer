@@ -1,0 +1,47 @@
+<div class="container">
+    <div fxLayout="column" fxLayoutAlign="center center" >
+    <h4>Rank Candidates per Project</h4>
+    <mat-form-field appearance="outline">
+      <mat-label>Select a Post</mat-label>
+      <mat-select [(value)]="currentpost">
+        <mat-option (click)="check(post)" *ngFor="let post of posts"  [value]="post">{{post.Title}}</mat-option>
+        
+      </mat-select>
+    </mat-form-field>
+    <p *ngIf="currentpost">You selected: {{currentpost.Title}}</p>
+    <div ></div>
+    <mat-form-field *ngIf="currentpost" appearance="outline">
+      <mat-label>Select a Cand</mat-label>
+      <mat-select [(value)]="currentcand">
+        <mat-option *ngFor="let cand of currentpost.Candidates" [value]="cand" (click)="crit()">{{cand.email}}</mat-option>
+        
+      </mat-select>
+    </mat-form-field>
+    <div *ngIf="notranker">
+    <div fxLayout="row" fxLayoutAlign="center center" >
+    <mat-form-field *ngIf="currentcand && candscore" appearance="outline">
+      
+      <mat-label>Score</mat-label>
+      <input matInput value={{candscore}} placeholder="Placeholder" disabled>
+    </mat-form-field> 
+  
+    <button mat-raised-button color="accent" *ngIf="candscore" (click)="savecandidatescore()" >Save Score</button>
+    </div>
+    <div *ngIf="currentpost && currentcand" >
+      <b *ngIf="ranked">Already Ranked Candidate</b>
+    </div>
+      <div  *ngIf="currentpost && currentcand && currentpost.Finalized==false">
+      <app-projecteditdetails [post]="currentpost" [cand]='currentcand' [viewonlyability]="false"  (myOutput)="getscore($event)">
+                              
+      </app-projecteditdetails>
+    </div>
+    </div>
+    
+   <!--<div *ngIf="currentcand  && !ranked && !missedbutton">
+<button mat-stroked-button (click)="missedinterview()">Candidate missed the interview</button>
+    </div>--> 
+    
+  </div>
+</div>
+      
+    
