@@ -9,8 +9,8 @@
       <div>
         <a mat-button [routerLink]="'/cards'"> Projects </a>
         <a mat-button *ngIf="auth.getrole()=='admin'" [routerLink]="'/project-build'"> Build a Project </a>   
-        <a mat-button *ngIf="auth.getrole()=='editor'"  [routerLink]="['/cards-edit','2']" >Edit Project Criteria</a>  
-        <a mat-button *ngIf="auth.getrole()=='ranker'" [routerLink]="'/rank-candidates'" >Rank Candidates </a>  
+        <a mat-button *ngIf="auth.getrole()=='editor' || auth.getrole()=='editor+ranker'  "  [routerLink]="['/cards-edit','2']" >Edit Project Criteria</a>  
+        <a mat-button *ngIf="auth.getrole()=='ranker'|| auth.getrole()=='editor+ranker'" [routerLink]="'/rank-candidates'" >Rank Candidates </a>  
         <a mat-button *ngIf="auth.getrole()=='admin'"   routerLink="/adminpanel" >Admin </a>
       </div>
       <div class="left-side-toolbar">

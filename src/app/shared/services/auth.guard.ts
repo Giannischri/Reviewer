@@ -19,6 +19,8 @@ export class AuthGuard implements CanActivate {
       const userRole = this.auth.getrole();
       
       console.log(userRole)
+      if(userRole=='editor+ranker')
+      return true
           if (next.data['role'] && next.data['role'].indexOf(userRole) === -1) {
             this.router.navigate(['/cards']);
             return false;

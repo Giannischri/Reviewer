@@ -437,15 +437,15 @@ ngOnDestroy() {
  checktitle(string:any)
  {
   
-  var error=false
+  var ecount=0
   var str =string
   
   
   this.posts.forEach(element=>{
     if(element.Title==str)
-    error=true
+    ecount=ecount+1
   })
-  if(error!=false)
+  if(ecount>=2)
   {
     this.UI_message('Title already exists')
     this.registrationForm.controls['Title'].setErrors({'incorrect': true});

@@ -287,8 +287,8 @@ export class AuthService {
              if(!localStorage.getItem('roles')){
            this.aer=String(this.userData.roles?.admin)+','+String(this.userData.roles?.employee?.editor)+','+String(this.userData.roles?.employee?.ranker)
            localStorage.setItem('roles',this.aer)
-           if(this.userData.roles?.employee?.editor==true && this.userData.roles?.employee?.ranker==true )
-           this.dialog.open(ChooseroleComponent)
+         //  if(this.userData.roles?.employee?.editor==true && this.userData.roles?.employee?.ranker==true )
+         //  this.dialog.open(ChooseroleComponent)
              }
             
     });
@@ -322,7 +322,9 @@ export class AuthService {
     let roles=localStorage.getItem('roles')?.split(',')
    
     if(roles){
-    if (roles![1]=='true'){
+      if (roles![1]=='true' && roles![2]=='true')
+      return 'editor+ranker'
+    else if (roles![1]=='true'){
     return 'editor'
     }
     else if(roles![0]=='true'){
@@ -331,6 +333,7 @@ export class AuthService {
     else if(roles![2]=='true'){
     return 'ranker'
     }
+    
     else {
     return 'viewer'
     }
