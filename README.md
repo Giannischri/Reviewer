@@ -1,3 +1,5 @@
+Admin builds the project with rankers,candidates and project editor.Editor builds the criteria.Rankers are ranking candidates with different criteria based on hierarchical tree bottom-up algorithm
+
 # NgProject2
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.2.4.
