@@ -28,7 +28,7 @@
             {{post.Description}}
             
             <div fxLayout="row" fxLayoutAlign="start start" >
-              <button mat-button color="accent" *ngIf="this.auth.getrole()=='admin' || (post.Open && !iscandidate(post))  || (!post.Open && isranker(post)) || (!post.Open && iseditor(post)) "  (click)="showcands(post)">Candidates</button>
+              <button mat-button color="accent" *ngIf="this.auth.getrole()=='admin' || (post.Open && iscandidate(post))  || (!post.Open && isranker(post)) || (!post.Open && iseditor(post)) "  (click)="showcands(post)">Candidates</button>
               <button mat-button color="primary" *ngIf=" this.auth.getrole()=='admin' || post.Open || (!post.Open && isranker(post)) || (!post.Open && iseditor(post))" (click)="showrankers(post)">Rankers</button>
              
               </div>
@@ -46,10 +46,10 @@
               <button   mat-raised-button  color="primary" *ngIf="(this.auth.getrole()=='editor' || this.auth.getrole()=='editor+ranker') && iseditor(post)"   [routerLink]="['/cards',post.key]">
                  <mat-icon>edit</mat-icon>
             </button>
-            <button mat-raised-button color="primary" *ngIf="(this.auth.getrole()=='ranker' || this.auth.getrole()=='editor+ranker') && isranker(post)" [routerLink]="['/rank-candidates',post.key]">Rank</button>
+            <button mat-raised-button color="primary" *ngIf="(this.auth.getrole()=='ranker' || this.auth.getrole()=='editor+ranker') && isranker(post) && !post.Finalized" [routerLink]="['/rank-candidates',post.key]">Rank</button>
         
-            <button   mat-raised-button color="primary" *ngIf="!post.Finalized && ((iseditor(post) && (this.auth.getrole()=='editor' || this.auth.getrole()=='editor+ranker')) || this.auth.getrole()=='admin')" (click)="this.treesrv.finalizeproject(post)">Finalize</button>
-            <button   mat-raised-button color="primary" *ngIf="post.Finalized" (click)="exportcsv(post)"><mat-icon> import_export</mat-icon></button>
+            <button   mat-raised-button color="primary"  *ngIf="!post.Finalized  && ((iseditor(post) && (this.auth.getrole()=='editor' || this.auth.getrole()=='editor+ranker')) || this.auth.getrole()=='admin')" (click)="this.treesrv.finalizeproject(post)">Finalize</button>
+            <button   mat-raised-button color="primary" *ngIf="post.Finalized && iseditor(post)" (click)="exportcsv(post)"><mat-icon> import_export</mat-icon></button>
                 </div>
                 <div fxLayout="column" fxLayoutAlign="center center" >
                   

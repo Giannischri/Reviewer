@@ -17,8 +17,6 @@ export class AuthGuard implements CanActivate {
         this.router.navigate(['sign-in']);
       }
       const userRole = this.auth.getrole();
-      
-      console.log(userRole)
       if(userRole=='editor+ranker')
       return true
           if (next.data['role'] && next.data['role'].indexOf(userRole) === -1) {

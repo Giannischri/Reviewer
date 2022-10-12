@@ -56,7 +56,7 @@ export class SignupformComponent implements OnInit   {
       this.validemail=false
     }
     if (controlErrors != null && key=='password') {  
-      this.authService.UI_message('password doesnt meet pattern criteria')
+      this.authService.UI_message('The password given does not conform to the allowed password patterns')
       this.validpassword=false
     }
   })

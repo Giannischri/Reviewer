@@ -16,7 +16,7 @@ export class CardsearchComponent implements OnInit {
 
   ngOnInit(): void {
     this.cardsarray=this.dataservice.cards
-    console.log(this.cardsearch)
+    console.log(this.cardsarray)
   }
   add_card(card:Post)
   {

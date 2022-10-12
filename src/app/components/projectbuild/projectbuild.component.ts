@@ -265,16 +265,21 @@ ngOnDestroy() {
   //print valeus of form on click( me to disabled to koumpi dn mporw na pathsw "POST" mexri na gemisw ta required fields)
   Post_Button() {
     try{
+      if(this.rankers.length==0)
+      throw("Project doesnt have any rankers")
       this.checktitle(this.registrationForm.value.Title)
     this.cands.forEach(element=>{if(element.firstname+" "+element.secondname==this.registrationForm.value.Project_Manager){
-      throw('Editor cant be a Candidate')
+      throw('Editor cant be a Candidate on the same project')
     }})
     this.rankers.forEach(element=>{if(element.firstname+" "+element.secondname==this.registrationForm.value.Project_Manager){
-      throw('Editor cant be a Ranker')
+      throw('Editor cant be a Ranker on the same project')
     }})
  
-    if(!this.registrationForm.valid)
-    throw('Form is not valid')
+    if(!this.registrationForm.controls['Title'].valid)
+    throw('Title field is not valid')
+    if(!this.registrationForm.controls['Project_Manager'].valid)
+    throw('Project Manager field is not valid')
+
         this.posting=true
                   this.post={
                     key:this.router.snapshot.paramMap.get('postkey'),
@@ -445,10 +450,10 @@ ngOnDestroy() {
     if(element.Title==str)
     ecount=ecount+1
   })
-  if(ecount>=2)
+  if(ecount>=1)
   {
     this.UI_message('Title already exists')
-    this.registrationForm.controls['Title'].setErrors({'incorrect': true});
+    //this.registrationForm.controls['Title'].setErrors({'incorrect': true});
   }
 
  }

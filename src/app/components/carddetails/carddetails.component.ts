@@ -40,6 +40,7 @@ export class CarddetailsComponent implements OnInit {
    }
 
   ngOnInit(): void {
+   
     this.nocands=false
     const routeParams = this.route.snapshot.paramMap;
     const prostkeyparam = routeParams.get('postkey');
@@ -50,7 +51,7 @@ export class CarddetailsComponent implements OnInit {
       if(element.key==prostkeyparam) 
       this.post=element 
     })
-  
+    
    //this.scoreusers=this.treesrv.checkfinalization(this.post!)
     if(this.post?.Project_Manager==this.auth.userData.firstname+" "+this.auth.userData.secondname)
       this.viewonly=false
@@ -64,6 +65,7 @@ export class CarddetailsComponent implements OnInit {
     this.treesrv.getfromdatabase(this.post).subscribe((res:Criteria[])=>{this.dataSource.next(res)});
   
   })
+  
     this.dataSource.subscribe(items => {
       this.treeSource.data= [];
       this.treeSource.data = items;
@@ -84,6 +86,7 @@ export class CarddetailsComponent implements OnInit {
     }
     
   }
+ 
   hasNoContent(index: number,node: Criteria){
     
     if(node.title==''){

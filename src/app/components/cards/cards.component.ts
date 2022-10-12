@@ -24,7 +24,7 @@ export class CardsComponent implements OnInit {
    posts:Post[]=[];
    candsr:any[]=[];
    scores:any[]=[]
-  constructor(private dataservice:DataService,public auth:AuthService,public dialog:MatDialog,public treesrv:TreeService,private route:ActivatedRoute,private router:Router) 
+  constructor(private dataservice:DataService,public auth:AuthService,public dialog:MatDialog,public treesrv:TreeService,private route:ActivatedRoute,private router:Router,private afd:AngularFireDatabase) 
     {
      
     }
@@ -34,9 +34,12 @@ export class CardsComponent implements OnInit {
     
    if(this.route.snapshot.paramMap.get('reviewer')=='2')
      {
-      this.dataservice.getReviewerPosts().subscribe((res:Post[])=>{
-      
-      this.posts=res
+      this.dataservice.getProjectCards().subscribe((res)=>{
+      res.forEach((post:Post)=>{
+        if(this.iseditor(post))
+        this.posts.push(post)
+
+      })
     }); 
      
      }
@@ -54,9 +57,9 @@ export class CardsComponent implements OnInit {
       )
     
   }
+ 
   iscandidate(post:Post)
   {
-    console.log(this.auth.getrole())
     var bool:boolean=false
     post.Candidates.forEach((element:any) => {
       if(element.email==this.auth.userData.email){
@@ -115,7 +118,13 @@ export class CardsComponent implements OnInit {
   exportcsv(post:Post): void {
     this.treesrv.getCandScores(post!).subscribe((res:any)=>{
       res.forEach((element:any)=>{
-        let str=element.email+" -->>:"+element.score
+        var str:any
+        if(element.score==0)
+       str=element.email+" -->>:failed"
+        else if(element.score==-1)
+         str=element.email+" -->>:missed interview"
+         else
+         str=element.email+" -->>:"+element.score
         this.scores.push(str)
       })
  

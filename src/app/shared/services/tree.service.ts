@@ -262,16 +262,18 @@ console.log(this.tempnodes)
   }
   finalizeproject(post:Post)
   {
-    var ref=firebase.database().ref().child('scores').child(post.key!)  
-   this.afd.list(ref).snapshotChanges().subscribe(data=>{
-     console.log(data)
-     console.log(data.length)
-     console.log(post.Candidates.length)
-     if(data.length==post.Candidates.length)
-    firebase.database().ref().child('projects').child(post.key!).child('Finalized').set(true)
-    else
-    this.UI_message("Not all Candidates have been ranked")
-  })
+      var bool:boolean=false
+      var ref=firebase.database().ref().child('scores').child(post.key!)  
+     this.afd.list(ref).snapshotChanges().subscribe(data=>{
+       if(data.length==post.Candidates.length){
+       firebase.database().ref().child('projects').child(post.key!).child('Finalized').set(true)
+       this.UI_message('Project Finalized')
+       }
+       else
+       {
+        this.UI_message('Not all candidates have been ranked')
+       }
+     })  
   }
   getCandScores(post:Post)
   {
