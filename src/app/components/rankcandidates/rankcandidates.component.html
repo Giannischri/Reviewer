@@ -11,7 +11,7 @@
     <p *ngIf="currentpost">You selected: {{currentpost.Title}}</p>
     <div ></div>
     <mat-form-field *ngIf="currentpost" appearance="outline">
-      <mat-label>Select a Cand</mat-label>
+      <mat-label>Select a Candidate</mat-label>
       <mat-select [(value)]="currentcand">
         <mat-option *ngFor="let cand of currentpost.Candidates" [value]="cand" (click)="crit()">{{cand.email}}</mat-option>
         

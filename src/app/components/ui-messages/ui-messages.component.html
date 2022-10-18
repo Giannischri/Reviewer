@@ -2,18 +2,18 @@
     <h3>
       <div fxLayout="row">
         <div fxLayout="column" *ngIf="this.error_msg[1]==1" >
-          Candidates:
+          <p>Candidates of <b>{{this.error_msg[0].Title}}</b>:</p>
           <mat-chip-list  class="mat-chip-list-stacked"  aria-label="Color selection">
-            <mat-chip *ngFor="let cand of this.error_msg[0]"  class="example-box" selected color="accent">
+            <mat-chip *ngFor="let cand of this.error_msg[0].Candidates"  class="example-box" selected color="accent">
               {{cand.email}}
             </mat-chip>
           </mat-chip-list>
         </div>
        
         <div fxLayout="column"  *ngIf="this.error_msg[1]==2">
-          Rankers:
+        <p>Rankers of <b>{{this.error_msg[0].Title}}</b>:</p>
           <mat-chip-list  aria-label="Color selection">
-            <mat-chip *ngFor="let ranker of this.error_msg[0]"  class="example-box" selected color="primary">
+            <mat-chip *ngFor="let ranker of this.error_msg[0].Rankers"  class="example-box" selected color="primary">
               {{ranker.email}}
             </mat-chip>
           </mat-chip-list>

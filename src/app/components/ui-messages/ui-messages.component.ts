@@ -15,7 +15,7 @@ export class UiMessagesComponent implements OnInit {
 
   ngOnInit(): void {
     if(this.error_msg[1]=="1"){
-
+        
     }
     else if(this.error_msg[1]=="2"){
 

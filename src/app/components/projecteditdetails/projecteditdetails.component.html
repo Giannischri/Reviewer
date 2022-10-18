@@ -53,7 +53,7 @@
               
               <button mat-icon-button disabled></button>
             
-              <input style="width:40px;"  [value]="node.score" disabled *ngIf="ability=='ranker' && node.score || (node.allvoted==true && node.subjective==true)">
+              <input style="width:40px;"  [value]="node.score" *ngIf="ability=='ranker' && node.score || (node.allvoted==true && node.subjective==true)">
               <button mat-button (click)="openDialog3(node)" *ngIf="ability=='ranker'"><mat-icon style="color:blueviolet"> rate_review</mat-icon></button>
               <p  *ngIf="!node.allvoted &&!viewonlyability && node.subjective && authservice.getrole()=='ranker'">Not all rankers have voted</p>
             <button *ngIf="ability!='ranker' && ability!='editor'" mat-icon-button disabled></button>
@@ -83,7 +83,7 @@
                   <!-- use a disabled button to provide padding for tree leaf -->
                  
                   <button mat-icon-button disabled></button>
-                  <input style="width:40px;"  [value]="node.score" disabled *ngIf="ability=='ranker' && node.score || (node.allvoted==true && node.subjective==true) ">
+                  <input style=" border:1px solid #FFC107;width:40px;"  [value]="node.score" disabled *ngIf="ability=='ranker' && node.score || (node.allvoted==true && node.subjective==true) ">
                   <p  *ngIf="!node.allvoted &&!viewonlyability && node.subjective && authservice.getrole()=='ranker'">Not all rankers have voted</p>
                   </div>
                  

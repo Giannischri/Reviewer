@@ -66,6 +66,7 @@ export class CardsComponent implements OnInit {
       bool=true
       }
     });
+    
     return bool
   }
   isranker(post:Post)
@@ -104,13 +105,13 @@ export class CardsComponent implements OnInit {
     showcands(post:Post)
     {
       this.dialog.open(UiMessagesComponent, {
-        data: [post.Candidates,'1'],
+        data: [post,'1'],
       });
     }
     showrankers(post:Post)
     {
       this.dialog.open(UiMessagesComponent, {
-        data: [post.Rankers,'2'],
+        data: [post,'2'],
 
       });
     }

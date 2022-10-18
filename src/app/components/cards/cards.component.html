@@ -28,8 +28,8 @@
             {{post.Description}}
             
             <div fxLayout="row" fxLayoutAlign="start start" >
-              <button mat-button color="accent" *ngIf="this.auth.getrole()=='admin' || (post.Open && iscandidate(post))  || (!post.Open && isranker(post)) || (!post.Open && iseditor(post)) "  (click)="showcands(post)">Candidates</button>
-              <button mat-button color="primary" *ngIf=" this.auth.getrole()=='admin' || post.Open || (!post.Open && isranker(post)) || (!post.Open && iseditor(post))" (click)="showrankers(post)">Rankers</button>
+              <button mat-button color="accent" *ngIf="this.auth.getrole()=='admin' || (post.Open && iscandidate(post))  || (isranker(post)) || (iseditor(post)) "  (click)="showcands(post)">Candidates</button>
+              <button mat-button color="primary" *ngIf=" this.auth.getrole()=='admin' || post.Open || (isranker(post)) || (iseditor(post))" (click)="showrankers(post)">Rankers</button>
              
               </div>
             </mat-card-content>
@@ -38,23 +38,23 @@
               <div fxLayout="column" fxLayoutAlign="center center" >
                 
                 <div fxLayout="row" fxLayoutAlign="center start" >
-                <button mat-raised-button color="primary"  *ngIf="!iseditor(post) || this.auth.getrole()!='editor' || this.auth.getrole()!='editor+ranker'"  [routerLink]="['/cards',post.key]"  >View<mat-icon>pageview</mat-icon></button>
+                <button mat-raised-button color="primary"  *ngIf="!iseditor(post) && (this.auth.getrole()!='editor' || this.auth.getrole()!='editor+ranker') || (isranker(post) && !post.Finalized)"  [routerLink]="['/cards',post.key]"  >View<mat-icon>pageview</mat-icon></button>
                 
                 <button   mat-raised-button  color="primary" *ngIf="this.auth.getrole()=='admin'"   [routerLink]="['/project-build',post.key]">
                   <mat-icon>settings</mat-icon>
               </button> 
-              <button   mat-raised-button  color="primary" *ngIf="(this.auth.getrole()=='editor' || this.auth.getrole()=='editor+ranker') && iseditor(post)"   [routerLink]="['/cards',post.key]">
+              <button   mat-raised-button  color="primary" *ngIf="(this.auth.getrole()=='editor' || this.auth.getrole()=='editor+ranker') && iseditor(post) && !post.Finalized"   [routerLink]="['/cards',post.key]">
                  <mat-icon>edit</mat-icon>
             </button>
             <button mat-raised-button color="primary" *ngIf="(this.auth.getrole()=='ranker' || this.auth.getrole()=='editor+ranker') && isranker(post) && !post.Finalized" [routerLink]="['/rank-candidates',post.key]">Rank</button>
         
-            <button   mat-raised-button color="primary"  *ngIf="!post.Finalized  && ((iseditor(post) && (this.auth.getrole()=='editor' || this.auth.getrole()=='editor+ranker')) || this.auth.getrole()=='admin')" (click)="this.treesrv.finalizeproject(post)">Finalize</button>
+            <button   mat-raised-button color="primary"  *ngIf="!post.Finalized  && ((iseditor(post) && (this.auth.getrole()=='editor' || this.auth.getrole()=='editor+ranker')))" (click)="this.treesrv.finalizeproject(post)">Finalize</button>
             <button   mat-raised-button color="primary" *ngIf="post.Finalized && iseditor(post)" (click)="exportcsv(post)"><mat-icon> import_export</mat-icon></button>
                 </div>
                 <div fxLayout="column" fxLayoutAlign="center center" >
                   
               
-              <button mat-raised-button color="accent"   [disabled]="!post.Open || post.Finalized || this.auth.getrole()!='viewer' || iscandidate(post)"   (click)="insertCandidate(post)">Become Candidate</button>
+              <button mat-raised-button color="accent"   *ngIf="post.Open && !post.Finalized && this.auth.getrole()=='viewer' && iscandidate(post)==false"   (click)="insertCandidate(post)">Become Candidate</button>
               <button mat-icon-button disabled></button>
               </div>
               <button mat-icon-button disabled></button>
