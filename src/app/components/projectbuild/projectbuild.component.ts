@@ -138,7 +138,7 @@ export class ProjectbuildComponent implements OnInit {
         this.post=element
     })
       console.log(this.post)
-      this.registrationForm.setValue({Title:this.post.Title,Description:this.post.Description,Project_Manager:this.post.Project_Manager,pid:this.post.key,Open:this.post.Open})
+      this.registrationForm.setValue({Title:this.post.Title,Description:this.post.Description,Project_Manager:this.post.Project_Manager,pid:this.post.key,status:this.post.Open})
       this.project_manager_search=this.post.Project_Manager
       this.rankers=this.post.Rankers
       this.cands=this.post.Candidates 
@@ -258,7 +258,7 @@ ngOnDestroy() {
     Title: new FormControl('',Validators.required),
     Project_Manager: new FormControl('',Validators.required),
     Description: new FormControl(''),
-    Open:new FormControl(''),
+    status:new FormControl(''),
     pid: new FormControl(''),
   });
 
@@ -288,15 +288,16 @@ ngOnDestroy() {
                     Project_Manager:this.registrationForm.value.Project_Manager,
                     Candidates:this.cands,
                     Rankers:this.rankers,
-                    Open:this.registrationForm.value.Open
+                    Open:this.registrationForm.value.status
                   }    
+                  console.log(this.post)
                   if(this.router.snapshot.paramMap.get('postkey')){
-                  console.log("edit"+this.post.key)
-                  this.dataservice.insertProjects(this.post,this.editorkey1,this.editorkey2,'edit')
+                  console.log("edit"+this.post)
+                 // this.dataservice.insertProjects(this.post,this.editorkey1,this.editorkey2,'edit')
                   }
          else{
           console.log("creating"+this.post)
-        let option = this.dataservice.insertProjects(this.post,this.editorkey1,this.editorkey2);
+    /*   let option = this.dataservice.insertProjects(this.post,this.editorkey1,this.editorkey2);
         if (option == 'BOTHEXISTS') {
           this.UI_message( "Project '" +
           this.registrationForm.value.Title +
@@ -319,7 +320,7 @@ ngOnDestroy() {
         if (option == 'project_per_reviewer_exists') {
           this.UI_message("User '"+this.registrationForm.value.Project_Manager+"' is Project Manager To Another Unfinished Project")
         
-      }
+      }*/
       this.cands=[]
       this.rankers=[]
     }

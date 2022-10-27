@@ -28,7 +28,7 @@
             {{post.Description}}
             
             <div fxLayout="row" fxLayoutAlign="start start" >
-              <button mat-button color="accent" *ngIf="this.auth.getrole()=='admin' || (post.Open && iscandidate(post))  || (isranker(post)) || (iseditor(post)) "  (click)="showcands(post)">Candidates</button>
+              <button mat-button color="accent" *ngIf="this.auth.getrole()=='admin' || (post.Open && !iscandidate(post))  || (isranker(post)) || (iseditor(post)) "  (click)="showcands(post)">Candidates</button>
               <button mat-button color="primary" *ngIf=" this.auth.getrole()=='admin' || post.Open || (isranker(post)) || (iseditor(post))" (click)="showrankers(post)">Rankers</button>
              
               </div>
