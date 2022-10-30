@@ -56,6 +56,8 @@ export class UserdetailsComponent implements OnInit {
       this.form.get('admin')?.setValue(this.currentuser.roles?.admin)
       if(this.currentuser.roles?.admin==false && !this.currentuser.roles.employee?.simple && !this.currentuser.roles.employee?.ranker && !this.currentuser.roles.employee?.editor)
       this.form.get('plainuser')?.setValue('true')
+      else if(this.currentuser.roles?.employee?.simple || this.currentuser.roles?.employee?.editor || this.currentuser.roles?.employee?.ranker)
+      this.form.get('simple')?.setValue(true)
     
   }
   }

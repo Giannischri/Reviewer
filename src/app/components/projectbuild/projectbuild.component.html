@@ -74,8 +74,8 @@
        <p></p>
       </div>
       <mat-radio-group aria-label="Select an option" formControlName="status">
-        <mat-radio-button  value="true"  [checked]="post!.Open">Open</mat-radio-button>&nbsp;
-        <mat-radio-button  value="false" [checked]="!post!.Open">Closed</mat-radio-button>
+        <mat-radio-button  value="true"  [checked]="post?.Open">Open</mat-radio-button>&nbsp;
+        <mat-radio-button  value="false" [checked]="post?.Open==false">Closed</mat-radio-button>
       </mat-radio-group>
       <div class="signbtn">
         <button class="pbtn" type="submit"  class="animated-button1">Post</button>
