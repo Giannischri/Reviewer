@@ -40,9 +40,9 @@ export class SignupformComponent implements OnInit {
 
   constructor(
     // REMOVED: public authService: AuthService,
+    private router:Router,
     public authServiceV2: AuthServiceV2, // Use AuthServiceV2 for all auth-related tasks
-    public dialogRef?: MatDialogRef<any>, // Use 'any' or a specific type if you have one for your dialog
-    private router: Router
+    // public dialogRef?: MatDialogRef<any>, // Use 'any' or a specific type if you have one for your dialog
   ) { }
 
   ngOnInit() {
@@ -68,8 +68,8 @@ export class SignupformComponent implements OnInit {
       this.authServiceV2.signup(firstname, secondname, email, password, password2).subscribe({
         next: (response: AuthResponse) => { // Specify response type
           this.authServiceV2.UI_message('Signup successful!'); // Use AuthServiceV2's message method
-          this.dialogRef?.close(true);
-          this.router.navigate(['/login']);
+          // this.dialogRef?.close(true);
+          this.router.navigate(['']);
         },
         error: (error) => {
           console.error('Signup error:', error);

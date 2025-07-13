@@ -1,68 +1,66 @@
-        <div dir="rtl" class="search-bar" fxLayoutGap="20px">
-          <mat-form-field  appearance="fill">
-            <mat-label>Project Search</mat-label>
-            <input mat-button (click)="searchcards()"  matInput  />
-            <button matSuffix mat-button><mat-icon >search</mat-icon></button>
-          </mat-form-field>
+<div dir="rtl" class="search-bar" fxLayoutGap="20px" style="margin-bottom: 20px;">
+  <mat-form-field appearance="fill" style="width: 100%;">
+    <mat-label>Project Search</mat-label>
+    <input matInput placeholder="Search projects" />
+    <button mat-icon-button matSuffix aria-label="Search projects">
+      <mat-icon>search</mat-icon>
+    </button>
+  </mat-form-field>
+</div>
+
+<div fxLayout="row wrap" fxLayoutGap="17px grid" fxLayoutAlign="start stretch">
+  <div *ngFor="let post of posts" fxFlex="25%" fxFlex.sm="33%" fxFlex.xs="90%" style="min-width: 280px;">
+    <mat-card class="card" style="display: flex; flex-direction: column; height: 100%;">
+      <mat-card-header>
+        <div fxLayout="row" fxLayoutAlign="center start" style="width: 100%;">
+          <mat-card-title style="flex-grow: 1;">{{ post.title }}</mat-card-title>
+          <mat-icon *ngIf="post.finalized" color="primary" aria-label="Finalized project">done_outline</mat-icon>
+          <mat-icon *ngIf="!post.open" color="warn" aria-label="Locked project">lock</mat-icon>
         </div>
-      <div fxLayout="row wrap" fxLayoutGap="17px grid">
-        
-        <div fxFlex="25%" fxFlex.xs="90%" fxFlex.sm="33%" *ngFor="let post of posts ">
-          <mat-card class="card " >
-            <div fxLayout="column">
-            <mat-card-header >
-              <div fxLayout="row" fxLayoutAlign="center start" >
-                
-                <mat-card-title >{{post.Title}}</mat-card-title>
-                <mat-icon *ngIf="post.Finalized">done_outline</mat-icon>
-                <mat-icon *ngIf="!post.Open">lock</mat-icon>
-                
-               
-          </div>
-          
-            </mat-card-header>
-            <mat-card-subtitle>Manager:{{post.Project_Manager}}</mat-card-subtitle>
-            
-            
-            <mat-card-content>
-            {{post.Description}}
-            
-            <div fxLayout="row" fxLayoutAlign="start start" >
-              <button mat-button color="accent" *ngIf="this.auth.getrole()=='admin' || (post.Open && !iscandidate(post))  || (isranker(post)) || (iseditor(post)) "  (click)="showcands(post)">Candidates</button>
-              <button mat-button color="primary" *ngIf=" this.auth.getrole()=='admin' || post.Open || (isranker(post)) || (iseditor(post))" (click)="showrankers(post)">Rankers</button>
-             
-              </div>
-            </mat-card-content>
-            <mat-card-actions>
-             
-              <div fxLayout="column" fxLayoutAlign="center center" >
-                
-                <div fxLayout="row" fxLayoutAlign="center start" >
-                <button mat-raised-button color="primary"  *ngIf="!iseditor(post) && (this.auth.getrole()!='editor' || this.auth.getrole()!='editor+ranker') || (isranker(post) && !post.Finalized)"  [routerLink]="['/cards',post.key]"  >View<mat-icon>pageview</mat-icon></button>
-                
-                <button   mat-raised-button  color="primary" *ngIf="this.auth.getrole()=='admin'"   [routerLink]="['/project-build',post.key]">
-                  <mat-icon>settings</mat-icon>
-              </button> 
-              <button   mat-raised-button  color="primary" *ngIf="(this.auth.getrole()=='editor' || this.auth.getrole()=='editor+ranker') && iseditor(post) && !post.Finalized"   [routerLink]="['/cards',post.key]">
-                 <mat-icon>edit</mat-icon>
+      </mat-card-header>
+
+      <mat-card-subtitle>Manager: {{ post.managerId }}</mat-card-subtitle>
+
+      <mat-card-content style="flex-grow: 1; overflow: hidden;">
+        <p style="max-height: 80px; overflow: hidden; text-overflow: ellipsis;">
+          {{ post.description }}
+        </p>
+
+        <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start start" style="margin-top: 10px;">
+          <button mat-button color="accent" aria-label="Show candidates">Candidates</button>
+          <button mat-button color="primary" aria-label="Show rankers">Rankers</button>
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions>
+        <div fxLayout="column" fxLayoutAlign="center center" style="width: 100%;">
+          <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center start" style="width: 100%;">
+            <button mat-raised-button color="primary" aria-label="View post">
+              View <mat-icon>pageview</mat-icon>
             </button>
-            <button mat-raised-button color="primary" *ngIf="(this.auth.getrole()=='ranker' || this.auth.getrole()=='editor+ranker') && isranker(post) && !post.Finalized" [routerLink]="['/rank-candidates',post.key]">Rank</button>
-        
-            <button   mat-raised-button color="primary"  *ngIf="!post.Finalized  && ((iseditor(post) && (this.auth.getrole()=='editor' || this.auth.getrole()=='editor+ranker')))" (click)="this.treesrv.finalizeproject(post)">Finalize</button>
-            <button   mat-raised-button color="primary" *ngIf="post.Finalized && iseditor(post)" (click)="exportcsv(post)"><mat-icon> import_export</mat-icon></button>
-                </div>
-                <div fxLayout="column" fxLayoutAlign="center center" >
-                  
-              
-              <button mat-raised-button color="accent"   *ngIf="post.Open && !post.Finalized && this.auth.getrole()=='viewer' && iscandidate(post)==false"   (click)="insertCandidate(post)">Become Candidate</button>
-              <button mat-icon-button disabled></button>
-              </div>
-              <button mat-icon-button disabled></button>
-              </div>
-            </mat-card-actions>
+
+            <button mat-raised-button color="primary" aria-label="Project settings">
+              <mat-icon>settings</mat-icon>
+            </button>
+
+            <button mat-raised-button color="primary" aria-label="Edit post">
+              <mat-icon>edit</mat-icon>
+            </button>
+
+            <button mat-raised-button color="primary" aria-label="Rank post">Rank</button>
+
+            <button mat-raised-button color="primary" aria-label="Finalize post">Finalize</button>
+
+            <button mat-raised-button color="primary" aria-label="Export post data">
+              <mat-icon>import_export</mat-icon>
+            </button>
           </div>
-          
-          </mat-card>
+
+          <div fxLayout="column" fxLayoutAlign="center center" style="margin-top: 10px; width: 100%;">
+            <button mat-raised-button color="accent" aria-label="Become candidate">Become Candidate</button>
+          </div>
         </div>
-      </div>
-    
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

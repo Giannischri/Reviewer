@@ -37,11 +37,11 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 
-import { AuthService } from "./shared/services/auth.service";
+// import { AuthService } from "./shared/services/auth.service";
 import { AuthServiceV2 } from "./shared/services/authv2.service";
 
-// import { CardsComponent } from './components/cards/cards.component';
-// import { ForgotpasswordComponent } from './components/forgotpassword/forgotpassword.component';
+import { CardsComponent } from './components/cards/cards.component';
+import { ForgotpasswordComponent } from './components/forgotpassword/forgotpassword.component';
 // import { AdminpanelComponent } from './components/adminpanel/adminpanel.component';
 // import { UserdetailsComponent } from './components/userdetails/userdetails.component';
 // import { ProjectbuildComponent } from './components/projectbuild/projectbuild.component';
@@ -61,6 +61,7 @@ import { RouterModule } from '@angular/router';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTabsModule } from '@angular/material/tabs';
 // import { ChooseroleComponent } from './components/chooserole/chooserole.component';
+import {HttpClientModule} from "@angular/common/http";
 import { NavbarComponent } from './components/navbar/navbar.component';
 
 
@@ -80,8 +81,8 @@ const firebaseConfig = {
     AppComponent,
     SignupformComponent,
     LoginformComponent,
-    // CardsComponent,
-    // ForgotpasswordComponent,
+    CardsComponent,
+    ForgotpasswordComponent,
     // AdminpanelComponent,
     // UserdetailsComponent,
     // ProjectbuildComponent,
@@ -101,6 +102,7 @@ const firebaseConfig = {
     NavbarComponent,
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
     RouterModule,
     AppRoutingModule,
@@ -138,7 +140,7 @@ const firebaseConfig = {
 
 
   ],
-  providers: [AuthService],
+  providers: [AuthServiceV2],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

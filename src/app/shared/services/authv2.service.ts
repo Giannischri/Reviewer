@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs'; // Removed 'tap' from here as it's used in login, not signup
 import { tap } from 'rxjs/operators'; // Keep tap for login method
 import { Router } from '@angular/router';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 
 // Define the DTO for signup request
 export interface SignupRequestDto {

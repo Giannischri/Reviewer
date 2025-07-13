@@ -1,11 +1,11 @@
 <div class="container">
-  <form [formGroup]="loginform" (ngSubmit)="onSubmit()">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 
       <div fxLayout="column" fxLayoutAlign="space-around center" >
         <div fxLayout="row" fxLayoutAlign="space-between center" >
       <h3 >Welcome back!Please login</h3>
 
-      <button type="button" class="btn-close">
+      <button type="button" class="btn-close" (click)="closeDialog()">
         <span class="icon-cross"></span>
         <span class="visually-hidden">Close</span>
       </button>
@@ -39,9 +39,9 @@
       <mat-divider></mat-divider>
 
 
-          <cool-google-button color="dark" (click)="authService.GoogleAuth()">
-            Login with Google
-          </cool-google-button>
+<!--          <cool-google-button color="dark" (click)="authService.GoogleAuth()">-->
+<!--            Login with Google-->
+<!--          </cool-google-button>-->
 
 
       <mat-divider></mat-divider>

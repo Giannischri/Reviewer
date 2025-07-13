@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginformComponent } from './components/loginform/loginform.component';
 import { SignupformComponent } from './components/signupform/signupform.component';
-// import { CardsComponent } from './components/cards/cards.component';
+import { CardsComponent } from './components/cards/cards.component';
 import { ForgotpasswordComponent } from './components/forgotpassword/forgotpassword.component';
 // import { AdminpanelComponent } from './components/adminpanel/adminpanel.component';
 // import { AuthGuard } from './shared/services/auth.guard';
@@ -22,7 +22,7 @@ const routes: Routes = [
 
   { path: 'sign-in', component: LoginformComponent },
   { path: 'register-user', component: SignupformComponent },
-  // { path: 'cards', component:  CardsComponent },
+  { path: 'cards', component:  CardsComponent },
   // { path: 'cards/:postkey', component: CarddetailsComponent },
   { path: '', redirectTo: '/cards', pathMatch: 'full' },
   { path: 'forgot-password', component: ForgotpasswordComponent },

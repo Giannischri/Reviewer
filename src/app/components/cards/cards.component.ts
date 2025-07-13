@@ -1,19 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable,map } from 'rxjs';
-import { AuthService } from 'src/app/shared/services/auth.service';
+import {AuthServiceV2} from 'src/app/shared/services/authv2.service';
 // import { DataService } from 'src/app/shared/services/data.service';
 import { Post } from 'src/app/shared/models/post';
 import firebase from 'firebase/compat/app'
 import 'firebase/compat/database'
 import { AngularFireDatabase } from '@angular/fire/compat/database';
 import { MatDialog } from '@angular/material/dialog';
-import { CarddetailsComponent } from '../carddetails/carddetails.component';
-import { TreeService } from 'src/app/shared/services/tree.service';
+// import { CarddetailsComponent } from '../carddetails/carddetails.component';
+// import { TreeService } from 'src/app/shared/services/tree.service';
 import { ActivatedRoute, Data, Route, Router } from '@angular/router';
-import { CardsearchComponent } from '../cardsearch/cardsearch.component';
-import { UiMessagesComponent } from '../ui-messages/ui-messages.component';
+// import { CardsearchComponent } from '../cardsearch/cardsearch.component';
+// import { UiMessagesComponent } from '../ui-messages/ui-messages.component';
 import { AppComponent } from 'src/app/app.component';
-import { ChooseroleComponent } from '../chooserole/chooserole.component';
+// import { ChooseroleComponent } from '../chooserole/chooserole.component';
 import * as fileSaver from 'file-saver';
 @Component({
   selector: 'app-cards',
@@ -24,7 +24,7 @@ export class CardsComponent implements OnInit {
    posts:Post[]=[];
    candsr:any[]=[];
    scores:any[]=[]
-  constructor(private dataservice:DataService,public auth:AuthService,public dialog:MatDialog,public treesrv:TreeService,private route:ActivatedRoute,private router:Router,private afd:AngularFireDatabase)
+  constructor(public auth:AuthServiceV2,public dialog:MatDialog,private route:ActivatedRoute,private router:Router)
     {
 
     }
@@ -32,119 +32,133 @@ export class CardsComponent implements OnInit {
   ngOnInit(): void {
 
 
-   if(this.route.snapshot.paramMap.get('reviewer')=='2')
-     {
-      this.dataservice.getProjectCards().subscribe((res)=>{
-      res.forEach((post:Post)=>{
-        if(this.iseditor(post))
-        this.posts.push(post)
-
-      })
-    });
-
-     }
-     else{
+   // if(this.route.snapshot.paramMap.get('reviewer')=='2')
+   //   {
+   //    this.dataservice.getProjectCards().subscribe((res)=>{
+   //    res.forEach((post:Post)=>{
+   //      if(this.iseditor(post))
+   //      this.posts.push(post)
+   //
+   //    })
+   //  });
+   //
+   //   }
+   //   else{
 
      this.getcards();
 
-     }
-    }
+     // }
+   }
 
   getcards(){
-    this.dataservice.getProjectCards().subscribe((res)=>{
-      this.posts=res
-    }
-      )
 
+    this.posts = [
+      {
+        id: 1,
+        title: 'Project Alpha',
+        managerId: 101,
+        description: 'Description of Project Alpha',
+        image: 'https://via.placeholder.com/150',
+        finalized: false,
+        open: true,
+        rankers: [201, 202],
+        candidates: [301],
+        createdAt: new Date('2025-01-01'),
+        updatedAt: new Date('2025-06-01'),
+      },
+      {
+        id: 2,
+        title: 'Project Beta',
+        managerId: 102,
+        description: 'Description of Project Beta',
+        image: 'https://via.placeholder.com/150',
+        finalized: true,
+        open: false,
+        rankers: [203],
+        candidates: [],
+        createdAt: new Date('2024-11-15'),
+        updatedAt: new Date('2025-05-20'),
+      },
+    ];
+  }
+  //
+  // getRole(): string {
+  //   return this.auth.getrole();
+  // }
+  //
+  // isAdmin(): boolean {
+  //   return this.getRole() === 'admin';
+  // }
+  //
+  // isEditor(post: Post): boolean {
+  //   // Implement your logic to check if current user is editor of post
+  //   return this.auth.isEditorOfPost(post); // example method
+  // }
+  //
+  // isRanker(post: Post): boolean {
+  //   return this.auth.isRankerOfPost(post); // example method
+  // }
+  //
+  // isCandidate(post: Post): boolean {
+  //   return this.auth.isCandidateOfPost(post); // example method
+  // }
+  //
+  // canViewCandidates(post: Post): boolean {
+  //   return this.isAdmin() || (post.Open && !this.isCandidate(post)) || this.isRanker(post) || this.isEditor(post);
+  // }
+  //
+  // canViewRankers(post: Post): boolean {
+  //   return this.isAdmin() || post.Open || this.isRanker(post) || this.isEditor(post);
+  // }
+  //
+  // canViewButton(post: Post): boolean {
+  //   const role = this.getRole();
+  //   return (!this.isEditor(post) && (role !== 'editor' && role !== 'editor+ranker')) || (this.isRanker(post) && !post.Finalized);
+  // }
+  //
+  // canEdit(post: Post): boolean {
+  //   const role = this.getRole();
+  //   return (role === 'editor' || role === 'editor+ranker') && this.isEditor(post) && !post.Finalized;
+  // }
+  //
+  // canRank(post: Post): boolean {
+  //   const role = this.getRole();
+  //   return (role === 'ranker' || role === 'editor+ranker') && this.isRanker(post) && !post.Finalized;
+  // }
+  //
+  // canFinalize(post: Post): boolean {
+  //   const role = this.getRole();
+  //   return !post.Finalized && this.isEditor(post) && (role === 'editor' || role === 'editor+ranker');
+  // }
+  //
+  // canExport(post: Post): boolean {
+  //   return post.Finalized && this.isEditor(post);
+  // }
+  //
+  // canBecomeCandidate(post: Post): boolean {
+  //   return post.Open && !post.Finalized && this.getRole() === 'viewer' && !this.isCandidate(post);
+  // }
+
+  // Actions
+
+  showcands(post: Post) {
+    // Implement show candidates logic
+    console.log('Show candidates for', post);
   }
 
-  iscandidate(post:Post)
-  {
-    var bool:boolean=false
-    post.Candidates.forEach((element:any) => {
-      if(element.email==this.auth.userData.email){
-      bool=true
-      }
-    });
-
-    return bool
-  }
-  isranker(post:Post)
-  {
-    var bool:boolean=false
-    post.Rankers.forEach((element:any) => {
-      if(element.email==this.auth.userData.email)
-      bool=true
-    });
-    return bool
-  }
-  iseditor(post:Post)
-  {
-    var bool:boolean=false
-    if(post.Project_Manager==this.auth.userData.firstname+" "+this.auth.userData.secondname)
-      bool=true
-    return bool
-  }
-  insertCandidate(post:Post)
-  {
-   this.dataservice.insertcandidate(post)
-  }
-  viewcandidates(cands:any[])
-  {
-    this.candsr=cands
-    console.log(this.candsr)
-  }
-  searchcards()
-  {
-       this.dialog.open(CardsearchComponent,{
-        height: '90%',
-        width: '60%'
-       })
+  showrankers(post: Post) {
+    // Implement show rankers logic
+    console.log('Show rankers for', post);
   }
 
-    showcands(post:Post)
-    {
-      this.dialog.open(UiMessagesComponent, {
-        data: [post,'1'],
-      });
-    }
-    showrankers(post:Post)
-    {
-      this.dialog.open(UiMessagesComponent, {
-        data: [post,'2'],
+  insertCandidate(post: Post) {
+    // Implement candidate insertion logic
+    console.log('Insert candidate for', post);
+  }
 
-      });
-    }
-
-  exportcsv(post:Post): void {
-    this.treesrv.getCandScores(post!).subscribe((res:any)=>{
-      res.forEach((element:any)=>{
-        var str:any
-        if(element.score==0)
-       str=element.email+" -->>:failed"
-        else if(element.score==-1)
-         str=element.email+" -->>:missed interview"
-         else
-         str=element.email+" -->>:"+element.score
-        this.scores.push(str)
-      })
-
-  console.log(this.scores)
-    var json:any={
-      'Title':post.Title,
-      'Description':post.Description,
-      'Project-Editor':post.Project_Manager,
-      'Finalized':post.Finalized,
-      'Open':post.Open,
-      'Rankers':post.Rankers.map((item:any)=>{return item.email}),
-      'Candidates':post.Candidates.map((item:any)=>{return item.email}),
-      'Scores':this.scores
-    }
-    console.log(json)
-    fileSaver.saveAs(new Blob([JSON.stringify(json, null, 2)], { type: 'JSON' }), 'sample.json');
-    this.scores=[]
-
-})
+  exportcsv(post: Post) {
+    // Implement export CSV logic
+    console.log('Export CSV for', post);
   }
 }
 

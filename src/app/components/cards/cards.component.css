@@ -1,26 +1,48 @@
-
-.mat-card-content{
-    height:40px;
-}
-.mat-card-actions{
-    height:70px;
-}
-.mat-card{
-    border: 2px solid black;
-    box-sizing: content-box;
-    box-shadow: 5px 5px 30px 5px #673AB7;
-    transition: all 0.3s ease 0s;
-}
-.mat-form-field{
-    background-color: aliceblue;
-    box-shadow: 5px 5px 30px 5px #673AB7;
-    margin-bottom: 20px;
-    height:60px;
+.mat-card-content {
+  height: 40px;
+  overflow: hidden;           /* keep content tidy */
+  text-overflow: ellipsis;    /* add ellipsis for overflow */
+  white-space: nowrap;        /* keep in one line */
+  padding-right: 8px;         /* prevent text touching edges */
+  box-sizing: border-box;
 }
 
-.mat-icon{
-    height:20px!important;
-    width:20px !important;
-    
-    font-size:20px !important;
+.mat-card-actions {
+  display: flex;
+  flex-wrap: wrap;            /* buttons wrap nicely */
+  gap: 8px;
+  padding: 8px 16px;
+  box-sizing: border-box;
+  justify-content: flex-start;
+  max-height: 120px;
+  overflow-y: auto;           /* scroll if needed */
+  overflow-x: visible;        /* prevent horizontal clipping */
+}
+
+.mat-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: auto;
+  min-height: 300px;
+  border: 2px solid black;
+  box-shadow: 5px 5px 30px 5px #673AB7;
+  box-sizing: border-box;
+  transition: all 0.3s ease 0s;
+  padding: 16px;              /* add internal padding to prevent clipping */
+}
+
+.mat-form-field {
+  background-color: aliceblue;
+  box-shadow: 5px 5px 30px 5px #673AB7;
+  margin-bottom: 20px;
+  height: 60px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.mat-icon {
+  height: 20px !important;
+  width: 20px !important;
+  font-size: 20px !important;
 }
