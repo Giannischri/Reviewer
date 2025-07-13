@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
-import { User } from 'src/app/shared/services/user';
+import { User } from 'src/app/shared/models/user';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { FormGroup,FormControl } from '@angular/forms';
 
@@ -29,7 +29,7 @@ export class UserdetailsComponent implements OnInit {
       firstname:'',
       secondname:'',
       roles: {
-       
+
         admin: false,
       },
       emailVerified: false,
@@ -58,10 +58,10 @@ export class UserdetailsComponent implements OnInit {
       this.form.get('plainuser')?.setValue('true')
       else if(this.currentuser.roles?.employee?.simple || this.currentuser.roles?.employee?.editor || this.currentuser.roles?.employee?.ranker)
       this.form.get('simple')?.setValue(true)
-    
+
   }
   }
-  
+
   updateTutorial(): void {
     const data = {
       firstname: this.currentuser.firstname,
@@ -74,7 +74,7 @@ export class UserdetailsComponent implements OnInit {
         editor:this.form.get('editor')?.value?true:false,
         simple:this.form.get('simple')?.value?true:false,
         }
-        
+
       },
       emailVerified: this.currentuser.emailVerified,
     };
@@ -84,15 +84,15 @@ export class UserdetailsComponent implements OnInit {
       data.roles.employee.editor=false
       data.roles.employee.simple=false
     }
-    
+
     if (this.currentuser.key) {
-      
-     
+
+
       this.authservice.update(this.currentuser.key,data)
       .then(() => this.message = 'The tutorial was updated successfully!')
        .catch(err => console.log(err));
     }
   }
- 
+
 
 }

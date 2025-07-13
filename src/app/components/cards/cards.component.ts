@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable,map } from 'rxjs';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { DataService } from 'src/app/shared/services/data.service';
-import { Post } from 'src/app/shared/services/post';
+// import { DataService } from 'src/app/shared/services/data.service';
+import { Post } from 'src/app/shared/models/post';
 import firebase from 'firebase/compat/app'
 import 'firebase/compat/database'
 import { AngularFireDatabase } from '@angular/fire/compat/database';
@@ -24,14 +24,14 @@ export class CardsComponent implements OnInit {
    posts:Post[]=[];
    candsr:any[]=[];
    scores:any[]=[]
-  constructor(private dataservice:DataService,public auth:AuthService,public dialog:MatDialog,public treesrv:TreeService,private route:ActivatedRoute,private router:Router,private afd:AngularFireDatabase) 
+  constructor(private dataservice:DataService,public auth:AuthService,public dialog:MatDialog,public treesrv:TreeService,private route:ActivatedRoute,private router:Router,private afd:AngularFireDatabase)
     {
-     
+
     }
 
   ngOnInit(): void {
-    
-    
+
+
    if(this.route.snapshot.paramMap.get('reviewer')=='2')
      {
       this.dataservice.getProjectCards().subscribe((res)=>{
@@ -40,24 +40,24 @@ export class CardsComponent implements OnInit {
         this.posts.push(post)
 
       })
-    }); 
-     
+    });
+
      }
      else{
-      
+
      this.getcards();
-     
+
      }
     }
- 
+
   getcards(){
     this.dataservice.getProjectCards().subscribe((res)=>{
       this.posts=res
     }
       )
-    
+
   }
- 
+
   iscandidate(post:Post)
   {
     var bool:boolean=false
@@ -66,7 +66,7 @@ export class CardsComponent implements OnInit {
       bool=true
       }
     });
-    
+
     return bool
   }
   isranker(post:Post)
@@ -115,7 +115,7 @@ export class CardsComponent implements OnInit {
 
       });
     }
-   
+
   exportcsv(post:Post): void {
     this.treesrv.getCandScores(post!).subscribe((res:any)=>{
       res.forEach((element:any)=>{
@@ -128,7 +128,7 @@ export class CardsComponent implements OnInit {
          str=element.email+" -->>:"+element.score
         this.scores.push(str)
       })
- 
+
   console.log(this.scores)
     var json:any={
       'Title':post.Title,
@@ -143,7 +143,7 @@ export class CardsComponent implements OnInit {
     console.log(json)
     fileSaver.saveAs(new Blob([JSON.stringify(json, null, 2)], { type: 'JSON' }), 'sample.json');
     this.scores=[]
-  
+
 })
   }
 }

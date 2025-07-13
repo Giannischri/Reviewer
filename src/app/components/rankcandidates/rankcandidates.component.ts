@@ -2,8 +2,8 @@ import { Component, NgZone, OnInit,OnChanges } from '@angular/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { DataService } from 'src/app/shared/services/data.service';
-import { Post } from 'src/app/shared/services/post';
-import { User } from 'src/app/shared/services/user';
+import { Post } from 'src/app/shared/models/post';
+import { User } from 'src/app/shared/models/user';
 import { Criteria } from 'src/app/shared/services/criteria';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
@@ -31,7 +31,7 @@ export class RankcandidatesComponent implements OnInit {
     treeControl = new NestedTreeControl<Criteria>(node => node.children);
   treeSource = new MatTreeNestedDataSource<Criteria>();
   dataSource: BehaviorSubject<Criteria[]>;
-  constructor(private auth:AuthService,private datasrv:DataService,private router:Router,private route:ActivatedRoute,private ngZone:NgZone,private treesrv:TreeService,public dialog:MatDialog) { 
+  constructor(private auth:AuthService,private datasrv:DataService,private router:Router,private route:ActivatedRoute,private ngZone:NgZone,private treesrv:TreeService,public dialog:MatDialog) {
     this.dataSource = new BehaviorSubject<Criteria[]>([]);
   }
 
@@ -40,10 +40,10 @@ export class RankcandidatesComponent implements OnInit {
     const prostkeyparam = routeParams.get('postkey');
     this.auth.afAuth.authState.subscribe((user)=>{
       console.log(user!.email)
-      if(user) 
-      this.auth.getuserkey(user!.email).subscribe((res:any)=>{  
+      if(user)
+      this.auth.getuserkey(user!.email).subscribe((res:any)=>{
         for(var index in res)
-        { 
+        {
           if(res[index].email==user!.email)
            {
             console.log(res[index].key)
@@ -53,7 +53,7 @@ export class RankcandidatesComponent implements OnInit {
                 this.currentpost=res
                 this.check(this.currentpost!)
               })
-                
+
             }
             else{
             this.datasrv.getprojectsperranker(res[index].key).subscribe(res=>{
@@ -63,11 +63,11 @@ export class RankcandidatesComponent implements OnInit {
           }
         }
      })
-    
-    
-     
+
+
+
   })
-  
+
   }
   check(post:Post)
   {
@@ -80,7 +80,7 @@ export class RankcandidatesComponent implements OnInit {
       this.notranker=true
     }
    })
-   
+
   }
   crit(){
     this.candscore=undefined
@@ -92,18 +92,18 @@ export class RankcandidatesComponent implements OnInit {
           this.missedbutton=true
       if(element.email==this.currentcand?.email){
       this.ranked=true
-      
+
       }
     })
   }
-    }) 
-  
+    })
+
    /* this.treesrv.getfromdatabase(this.currentpost!).subscribe(data=>this.dataSource.next(data));
     this.dataSource.subscribe(items => {
       this.treeSource.data= [];
       this.treeSource.data = items;
     });*/
-    
+
   }
   savecandidatescore(){
           this.treesrv.savescore(this.currentpost!,this.currentcand!,this.auth.userData.key!,this.candscore)
@@ -122,8 +122,8 @@ export class RankcandidatesComponent implements OnInit {
   getscore(data:string){
     console.log(data+"  "+this.currentcand?.email)
       this.candscore=data
-      
-      
+
+
   }
   UI_message(error_msg: any) {
     this.dialog.open(UiMessagesComponent, {
@@ -131,5 +131,5 @@ export class RankcandidatesComponent implements OnInit {
       width:'350px'
     });
   }
-  
+
 }

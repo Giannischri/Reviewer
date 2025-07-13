@@ -6,8 +6,8 @@ import { FormControl } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgZone } from '@angular/core';
-import { Post } from './post';
-import { User } from './user';
+import { Post } from '../models/post';
+import { User } from '../models/user';
 import { ProjectbuildsearchComponent } from 'src/app/components/projectbuildsearch/projectbuildsearch.component';
 import { AuthService } from './auth.service';
 import { Observable,map,of,Subject,throwError, from } from 'rxjs';
@@ -25,21 +25,21 @@ export class DataService {
   cards:Post[]=[];
   cands:any[]=[];
   rankerposts:any[]=[];
-  
+
   constructor(
     public afd:AngularFireDatabase,
     public router: Router,
     public ngZone: NgZone, // NgZone service to remove outside scope warning
     private dialog:MatDialog,
     private auth:AuthService
-    
+
 
   ) {this.getUsers().subscribe(data=>{
     this.users=data
     this.users.forEach( (item, index) => {
       if(item.roles?.admin==true) this.users.splice(index,1);
     });
-  }) 
+  })
   this.getProjectCards().subscribe(data=>{
     this.cards=data
   })
@@ -58,27 +58,27 @@ export class DataService {
   projectsList!: AngularFireList<any>;
   UsersList!: AngularFireList<any>;
   projectsList2!: AngularFireList<any>;
-  
+
 
 
 getProjectCards(){
-  
+
    return this.afd.list('projects').snapshotChanges().pipe(
       map(changes =>
         changes.map(c =>
-          ({ key: c.payload.key, ...c.payload.val() as [] }) 
+          ({ key: c.payload.key, ...c.payload.val() as [] })
         )
       )
-    )   
+    )
 }
   getProject(postkey:string){
-    
+
     var obj:any
     firebase.database().ref().child('projects').child(postkey!).on('value',function (snapshot){
        obj=snapshot.val()
     })
     return of(obj)
-      
+
   }
   UI_message(error_msg: any) {
     this.dialog.open(UiMessagesComponent, {
@@ -95,7 +95,7 @@ getProjectCards(){
       if (snapshot.child("Title").val() == title) {//an o titlos yparxei hdh den ginetai na mpei idios pouthena
         return titleex=true
       }
-     
+
       if (snapshot.child("Project_Manager").val() == manager && snapshot.child("Finalized").val() == false) {//an o user einai manager se allo unfinished project
        return managerex=true
       }
@@ -152,22 +152,22 @@ getProjects2(Title: any, manager: any): any {
     var key:any;
     if(edit){
    key=post.key
-   
+
   }else
    key= this.afd.createPushId();//auto einai project key
-  
+
     if(editorkey1 && editorkey2!=editorkey1 && editorkey2)
     {
       this.editorprojects1.forEach( (item:any, index) => {
-        if(item==key) 
+        if(item==key)
         {
           this.editorprojects1.splice(index,1);
-         
+
           firebase.database().ref().child('projectspereditor').child(editorkey1).set(this.editorprojects1)
         }
       });
     }
-    
+
       var candnames:any[]=[]
       var candkeys:any[]=[]
       var rankernames:any[]=[]
@@ -182,7 +182,7 @@ getProjects2(Title: any, manager: any): any {
     post.Rankers.forEach((element:any) => {
       rankerkeys.push(element.key)
   });
-     
+
       var data={
         key:key,
       Title: post.Title,
@@ -193,11 +193,11 @@ getProjects2(Title: any, manager: any): any {
       Rankers:post.Rankers,
       Open:post.Open?true:false
       }
-      
-      
+
+
      this.afd.list('/projects').set(key, data);
      if(this.editorprojects2 && editorkey2){
-     this.editorprojects2.push(key) 
+     this.editorprojects2.push(key)
      firebase.database().ref().child('projectspereditor').child(editorkey2).set(this.editorprojects2)
      }
     // this.afd.list('/projectspereditor').set(editorkey,{key});
@@ -207,17 +207,17 @@ getProjects2(Title: any, manager: any): any {
     rankerkeys.forEach(rankerkey=>{
     firebase.database().ref().child('users').child(rankerkey).child('roles').child('employee').child('ranker').set(true)
   })
-  
+
     this.editorprojects2==undefined
     this.editorprojects1==undefined
     this.router.navigate(['cards'])
       return "ADDED"
-      
-    
+
+
   }
- 
+
   getReviewerPosts(){
-    
+
     var usr=this.auth.userData.key!
     var obs:Post[]=[];
     if(usr)
@@ -235,13 +235,13 @@ getProjects2(Title: any, manager: any): any {
       {
         firebase.database().ref().child('projects').child(element).orderByKey().on('value',function (snapshot){
              obs.push(snapshot.val())
-             
+
        })
     })
       })
     }
-    
-   return of(obs) 
+
+   return of(obs)
 }
 geteditorprojects(editorkey:string)
 {
@@ -270,15 +270,15 @@ insertcandidate(post:Post){//push id me ref kai elegxei an uparxei o user mesa
        var usr=this.auth.userData.key
        var exists:boolean=false;
        var cands:any[]=[];
-     var ref=firebase.database().ref().child('projects').child(post.key!).child('Candidates')  
+     var ref=firebase.database().ref().child('projects').child(post.key!).child('Candidates')
      if(this.auth.userData.roles?.admin==false && this.auth.userData.roles?.employee?.editor==false && this.auth.userData.roles?.employee?.ranker==false && this.auth.userData.roles?.employee?.simple==false  )
      {
                         var data={
                           email:this.auth.userData.email,
-                          firstname:this.auth.userData.firstname,   
+                          firstname:this.auth.userData.firstname,
                           key:this.auth.userData.key,
-                          secondname:this.auth.userData.secondname, 
-                        }        
+                          secondname:this.auth.userData.secondname,
+                        }
      }
      else
      this.UI_message("You arent supposed to be a candidate")
@@ -300,9 +300,9 @@ insertcandidate(post:Post){//push id me ref kai elegxei an uparxei o user mesa
     }catch(e){
       this.UI_message(e)
     }
-    
 
-    
+
+
    /*  this.afd.list('projects/'+post.key!+'/Candidates').valueChanges().subscribe((res:any)=>this.cands=res)
      this.cands.forEach(element=>{
       if(element.key==usr)
@@ -313,12 +313,12 @@ insertcandidate(post:Post){//push id me ref kai elegxei an uparxei o user mesa
      console.log(this.cands)
      this.afd.database.ref('projects/'+post.key!+'/Candidates').set(this.cands)
      }
-        this.cands=[]       */ 
-      
+        this.cands=[]       */
+
 }
 getprojectsperranker(ranker:string)
 {
- 
+
   var obs:Post[]=[];
   this.afd.list('rankersperproject').snapshotChanges().pipe(
     map(changes =>
@@ -333,17 +333,17 @@ getprojectsperranker(ranker:string)
           firebase.database().ref().child('projects').child(element.$key!).orderByKey().on('value',function (snapshot){
             if(snapshot.val()!=null && !snapshot.child('Finalized').val())
             obs.push(snapshot.val())
-            
-            
+
+
       })
       }
       })
-     
+
     })
   })
-  
+
   return of(obs)
-    
+
 }
 }
 

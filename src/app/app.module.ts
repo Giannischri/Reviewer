@@ -38,27 +38,29 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 
 import { AuthService } from "./shared/services/auth.service";
-import { CardsComponent } from './components/cards/cards.component';
-import { ForgotpasswordComponent } from './components/forgotpassword/forgotpassword.component';
-import { AdminpanelComponent } from './components/adminpanel/adminpanel.component';
-import { UserdetailsComponent } from './components/userdetails/userdetails.component';
-import { ProjectbuildComponent } from './components/projectbuild/projectbuild.component';
-import { ProjectbuildsearchComponent } from './components/projectbuildsearch/projectbuildsearch.component';
-import { ProjectbuildcsvComponent } from './components/projectbuildcsv/projectbuildcsv.component';
-import { ProjecteditComponent } from './components/projectedit/projectedit.component';
-import { ProjecteditdetailsComponent } from './components/projecteditdetails/projecteditdetails.component';
-import { CriteriaformComponent } from './components/criteriaform/criteriaform.component';
-import { UiMessagesComponent } from './components/ui-messages/ui-messages.component';
-import { CarddetailsComponent } from './components/carddetails/carddetails.component';
+import { AuthServiceV2 } from "./shared/services/authv2.service";
+
+// import { CardsComponent } from './components/cards/cards.component';
+// import { ForgotpasswordComponent } from './components/forgotpassword/forgotpassword.component';
+// import { AdminpanelComponent } from './components/adminpanel/adminpanel.component';
+// import { UserdetailsComponent } from './components/userdetails/userdetails.component';
+// import { ProjectbuildComponent } from './components/projectbuild/projectbuild.component';
+// import { ProjectbuildsearchComponent } from './components/projectbuildsearch/projectbuildsearch.component';
+// import { ProjectbuildcsvComponent } from './components/projectbuildcsv/projectbuildcsv.component';
+// import { ProjecteditComponent } from './components/projectedit/projectedit.component';
+// import { ProjecteditdetailsComponent } from './components/projecteditdetails/projecteditdetails.component';
+// import { CriteriaformComponent } from './components/criteriaform/criteriaform.component';
+// import { UiMessagesComponent } from './components/ui-messages/ui-messages.component';
+// import { CarddetailsComponent } from './components/carddetails/carddetails.component';
 import { RouterModule } from '@angular/router';
-import { UserprofileComponent } from './components/userprofile/userprofile.component';
-import { VerifyemailComponent } from './components/verifyemail/verifyemail.component';
-import { RankcandidatesComponent } from './components/rankcandidates/rankcandidates.component';
-import { RatecriteriaComponent } from './components/ratecriteria/ratecriteria.component';
-import { CardsearchComponent } from './components/cardsearch/cardsearch.component';
+// import { UserprofileComponent } from './components/userprofile/userprofile.component';
+// import { VerifyemailComponent } from './components/verifyemail/verifyemail.component';
+// import { RankcandidatesComponent } from './components/rankcandidates/rankcandidates.component';
+// import { RatecriteriaComponent } from './components/ratecriteria/ratecriteria.component';
+// import { CardsearchComponent } from './components/cardsearch/cardsearch.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTabsModule } from '@angular/material/tabs';
-import { ChooseroleComponent } from './components/chooserole/chooserole.component';
+// import { ChooseroleComponent } from './components/chooserole/chooserole.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 
 
@@ -78,24 +80,24 @@ const firebaseConfig = {
     AppComponent,
     SignupformComponent,
     LoginformComponent,
-    CardsComponent,
-    ForgotpasswordComponent,
-    AdminpanelComponent,
-    UserdetailsComponent,
-    ProjectbuildComponent,
-    ProjectbuildsearchComponent,
-    ProjectbuildcsvComponent,
-    ProjecteditComponent,
-    ProjecteditdetailsComponent,
-    CriteriaformComponent,
-    UiMessagesComponent,
-    CarddetailsComponent,
-    UserprofileComponent,
-    VerifyemailComponent,
-    RankcandidatesComponent,
-    RatecriteriaComponent,
-    CardsearchComponent,
-    ChooseroleComponent,
+    // CardsComponent,
+    // ForgotpasswordComponent,
+    // AdminpanelComponent,
+    // UserdetailsComponent,
+    // ProjectbuildComponent,
+    // ProjectbuildsearchComponent,
+    // ProjectbuildcsvComponent,
+    // ProjecteditComponent,
+    // ProjecteditdetailsComponent,
+    // CriteriaformComponent,
+    // UiMessagesComponent,
+    // CarddetailsComponent,
+    // UserprofileComponent,
+    // VerifyemailComponent,
+    // RankcandidatesComponent,
+    // RatecriteriaComponent,
+    // CardsearchComponent,
+    // ChooseroleComponent,
     NavbarComponent,
   ],
   imports: [
@@ -129,12 +131,12 @@ const firebaseConfig = {
     Ng2SearchPipeModule,
     ReactiveFormsModule,
     AngularFireModule.initializeApp(firebaseConfig),
-    AngularFirestoreModule, 
-    AngularFireAuthModule, 
+    AngularFirestoreModule,
+    AngularFireAuthModule,
     AngularFireStorageModule,
     AngularFireDatabaseModule
-    
-    
+
+
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

@@ -1,5 +1,5 @@
 import { Component,OnChanges,DoCheck,OnInit } from '@angular/core';
-import { Post } from 'src/app/shared/services/post';
+import { Post } from 'src/app/shared/models/post';
 import { DataService } from 'src/app/shared/services/data.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { Observable,switchMap } from 'rxjs';
@@ -17,22 +17,22 @@ export class ProjecteditComponent implements OnInit {
   currentpost?:Post;
   currentindex=-1;
   sub:any
- constructor(private authservice:AuthService,private dataservice:DataService,private router:Router) 
- { 
- 
+ constructor(private authservice:AuthService,private dataservice:DataService,private router:Router)
+ {
+
  }
  ngOnInit(): void {
-    
+
     this.getposts();
-    
+
  }
  getposts()
- { 
+ {
   this.dataservice.getReviewerPosts().subscribe((res:Post[])=>{
     console.log(res)
   this.posts=res
- });   
-  
+ });
+
  }
  ngOnDestroy() {
   if (this.sub) {
@@ -42,8 +42,8 @@ export class ProjecteditComponent implements OnInit {
  refreshList():void{
    this.currentpost=undefined;
    this.currentindex=-1;
-   
-   
+
+
  }
  setActive(post:Post,index:number):void{
    this.currentpost=post;
@@ -51,5 +51,5 @@ export class ProjecteditComponent implements OnInit {
    console.log(this.currentpost);
  }
 
- 
+
 }

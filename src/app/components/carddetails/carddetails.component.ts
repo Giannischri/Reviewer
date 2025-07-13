@@ -5,13 +5,13 @@ import { Criteria } from 'src/app/shared/services/criteria';
 import { of,Observable } from 'rxjs';
 import { TreeService } from 'src/app/shared/services/tree.service';
 import { BehaviorSubject } from 'rxjs';
-import { Post } from 'src/app/shared/services/post';
+import { Post } from 'src/app/shared/models/post';
 import { ActivatedRoute } from '@angular/router';
-import { DataService } from 'src/app/shared/services/data.service';
+// import { DataService } from 'src/app/shared/services/data.service';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { throws } from 'assert';
-import { User } from 'src/app/shared/services/user';
+import { User } from 'src/app/shared/models/user';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import {MatTabsModule} from '@angular/material/tabs';
 import { Injectable } from '@angular/core';
@@ -36,11 +36,11 @@ export class CarddetailsComponent implements OnInit {
    dataSource: BehaviorSubject<Criteria[]>;
   constructor(public treesrv:TreeService,public route:ActivatedRoute,public datasrv:DataService,public auth:AuthService) {
     this.dataSource = new BehaviorSubject<Criteria[]>([]);
-    
+
    }
 
   ngOnInit(): void {
-   
+
     this.nocands=false
     const routeParams = this.route.snapshot.paramMap;
     const prostkeyparam = routeParams.get('postkey');
@@ -48,10 +48,10 @@ export class CarddetailsComponent implements OnInit {
     console.log(prostkeyparam)
     this.datasrv.getProjectCards().subscribe(res=>{
       res.forEach((element:Post)=>{
-      if(element.key==prostkeyparam) 
-      this.post=element 
+      if(element.key==prostkeyparam)
+      this.post=element
     })
-    
+
    //this.scoreusers=this.treesrv.checkfinalization(this.post!)
     if(this.post?.Project_Manager==this.auth.userData.firstname+" "+this.auth.userData.secondname)
       this.viewonly=false
@@ -63,20 +63,20 @@ export class CarddetailsComponent implements OnInit {
     })
     if(this.post)
     this.treesrv.getfromdatabase(this.post).subscribe((res:Criteria[])=>{this.dataSource.next(res)});
-  
+
   })
-  
+
     this.dataSource.subscribe(items => {
       this.treeSource.data= [];
       this.treeSource.data = items;
-      
+
     });
-    
+
   }
   hasChild(index: number, node: Criteria){
     if(node.children){
       console.log("has child"+node.title)
-    
+
     return true;
     }
     else
@@ -84,11 +84,11 @@ export class CarddetailsComponent implements OnInit {
       console.log("no child"+node.title)
     return false;
     }
-    
+
   }
- 
+
   hasNoContent(index: number,node: Criteria){
-    
+
     if(node.title==''){
       console.log("hasno"+node.title);
     return true
@@ -107,12 +107,12 @@ candscores(){
         res.sort((a,b) => Number(a.score!)-Number(b.score!));
        this.cands=res.reverse()
        this.pcands=res.filter(item => item.score !=0 && item.score!=-1);
-       
+
       this.fcands= res.filter(item => item.score ==0);
-      this.mcands= res.filter(item => item.score == -1);  
-      })  
-      this.candbutton=true  
-      
+      this.mcands= res.filter(item => item.score == -1);
+      })
+      this.candbutton=true
+
 
    }
   catch(e)
@@ -120,9 +120,9 @@ candscores(){
     if(e=='emptycriteria')
     this.nocands==true
   }
-   
+
   }
 }
 
-   
+
 

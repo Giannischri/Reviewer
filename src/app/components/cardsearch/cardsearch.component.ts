@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Route, Router } from '@angular/router';
 import { DataService } from 'src/app/shared/services/data.service';
-import { Post } from 'src/app/shared/services/post';
+import { Post } from 'src/app/shared/models/post';
 import { MatDialogRef } from '@angular/material/dialog';
 @Component({
   selector: 'app-cardsearch',

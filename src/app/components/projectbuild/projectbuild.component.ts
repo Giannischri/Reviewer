@@ -12,7 +12,7 @@ import { ProjectbuildcsvComponent } from '../projectbuildcsv/projectbuildcsv.com
 import { UiMessagesComponent } from '../ui-messages/ui-messages.component';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Post } from 'src/app/shared/services/post';
+import { Post } from 'src/app/shared/models/post';
 import { ThisReceiver } from '@angular/compiler';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { TOUCH_BUFFER_MS } from '@angular/cdk/a11y/input-modality/input-modality-detector';
@@ -31,7 +31,7 @@ export class ProjectbuildComponent implements OnInit {
    posts!:Post[];
    addOnBlur = true;
    posting:boolean=false;
-  
+
   public getScreenWidth: any;
   public getScreenHeight: any;
   contentEditable: boolean = false;
@@ -40,7 +40,7 @@ export class ProjectbuildComponent implements OnInit {
   header = false;
   hoverImage = false;
   project_manager_search: any;
-  
+
   csvRecords: any[] = [];
   User_list = [
     {
@@ -141,13 +141,13 @@ export class ProjectbuildComponent implements OnInit {
       this.registrationForm.setValue({Title:this.post.Title,Description:this.post.Description,Project_Manager:this.post.Project_Manager,pid:this.post.key,status:this.post.Open})
       this.project_manager_search=this.post.Project_Manager
       this.rankers=this.post.Rankers
-      this.cands=this.post.Candidates 
+      this.cands=this.post.Candidates
       this.dataservice.getUsers().subscribe((res)=>{
         res.forEach(element=>{
           if(element.firstname+" "+element.secondname==this.post.Project_Manager){
              this.editorkey1=element.key
-             this.dataservice.geteditorprojects(this.editorkey1).subscribe((data:any)=>{this.dataservice.editorprojects1=data})        
-       } 
+             this.dataservice.geteditorprojects(this.editorkey1).subscribe((data:any)=>{this.dataservice.editorprojects1=data})
+       }
         })
     })
     }
@@ -155,11 +155,11 @@ export class ProjectbuildComponent implements OnInit {
   }
   @HostListener('unloaded')
 ngOnDestroy() {
-    
+
 }
- 
+
   addr(): void {
-    
+
     this.dataservice
     .openConfirmDialog()
     .afterClosed()
@@ -190,8 +190,8 @@ ngOnDestroy() {
     })
   }
   addc():void{
-    
-    
+
+
     var editortemp:any
     if(this.project_manager_search!=''){
     this.dataservice.users.forEach( (item:any, index) => {
@@ -217,7 +217,7 @@ ngOnDestroy() {
       var check2=this.cands.find(obj=>{
      return obj.key==res[1]
       })
-    
+
       if(check==undefined && check2==undefined && usr.key!=undefined )
       {
       this.cands.push(usr)
@@ -233,7 +233,7 @@ ngOnDestroy() {
       this.dataservice.users.push(editortemp!)
     editortemp=undefined
     })
-    
+
   }
   removec(cand: User): void {
     const index = this.cands.indexOf(cand);
@@ -274,7 +274,7 @@ ngOnDestroy() {
     this.rankers.forEach(element=>{if(element.firstname+" "+element.secondname==this.registrationForm.value.Project_Manager){
       throw('Editor cant be a Ranker on the same project')
     }})
- 
+
     if(!this.registrationForm.controls['Title'].valid)
     throw('Title field is not valid')
     if(!this.registrationForm.controls['Project_Manager'].valid)
@@ -289,7 +289,7 @@ ngOnDestroy() {
                     Candidates:this.cands,
                     Rankers:this.rankers,
                     Open:this.registrationForm.value.status
-                  }    
+                  }
                   console.log(this.post)
                   if(this.router.snapshot.paramMap.get('postkey')){
                   console.log("edit"+this.post)
@@ -314,17 +314,17 @@ ngOnDestroy() {
         if (option == 'ADDED') {
           console.warn('ADDED GAMWWW');
           //reset oles tis times gia na eiani empty to form k oles oi metablhtes
-          
+
           this.registrationForm.reset();
         }
         if (option == 'project_per_reviewer_exists') {
           this.UI_message("User '"+this.registrationForm.value.Project_Manager+"' is Project Manager To Another Unfinished Project")
-        
+
       }*/
       this.cands=[]
       this.rankers=[]
     }
-      
+
       setTimeout(()=>{                           // <<<---using ()=> syntax
         this.posting = false;
     }, 1500);
@@ -333,7 +333,7 @@ ngOnDestroy() {
   {
     console.log(e)
     this.UI_message(e)
-      
+
   }
 }
   add_toBase() {
@@ -369,7 +369,7 @@ ngOnDestroy() {
     console.log('einai: ', num);
     console.log('einai2: ', this.User_list.length);
     for (let items of this.csvRecords) {
-     
+
       this.User_list[i].id = items[0];
       this.User_list[i].name = items[1];
       this.User_list[i].surname = items[2];
@@ -377,7 +377,7 @@ ngOnDestroy() {
       this.User_list[i].phone = items[4];
       this.User_list[i].location = items[5];
       i = i + 1;
-    
+
     }
     this.cands.forEach(element=>{
       this.User_list.forEach(element2=>{
@@ -385,7 +385,7 @@ ngOnDestroy() {
         this.User_list.splice(this.User_list.indexOf(element2),1)
       })
     })
-      
+
     console.log('------------------------------------------');
     console.log('name value  ', this.User_list);
     console.log('------------------------------------------');
@@ -398,7 +398,7 @@ ngOnDestroy() {
       })
     })
       console.log(this.cands)
-    
+
 
   }
   //gia to click finallized
@@ -436,17 +436,17 @@ ngOnDestroy() {
         .subscribe((res) => {
           console.log(res)
           this.add_Project_Manager(res);
-          
+
         });
     }
   }
  checktitle(string:any)
  {
-  
+
   var ecount=0
   var str =string
-  
-  
+
+
   this.posts.forEach(element=>{
     if(element.Title==str)
     ecount=ecount+1
@@ -460,9 +460,9 @@ ngOnDestroy() {
  }
   add_Project_Manager(data: any) {
     console.log('check projects')
-    
+
     var error:any
-    
+
     this.registrationForm.value.Project_Manager=''
     this.project_manager_search=''
     /*this.posts.forEach(element=>
@@ -480,20 +480,20 @@ ngOnDestroy() {
 
       if (typeof data[3] == 'undefined') {
         this.project_manager_search = '';
-        
+
       } else {
        var str:string=data[2]+' '+data[3];
         this.project_manager_search = str;
         this.registrationForm.value.Project_Manager =str;
-       
-        this.editorkey2 = data[1]; 
+
+        this.editorkey2 = data[1];
         this.dataservice.geteditorprojects(this.editorkey2).subscribe((data:any)=>{
           this.dataservice.editorprojects2=[]
           this.dataservice.editorprojects2=data
           if(data.length==0)
           this.dataservice.editorprojects2=[]
           })
-        
+
       }
 }
 
@@ -507,7 +507,7 @@ ngOnDestroy() {
         (result: any) => {
           console.log('Result: ', result);
           this.csvRecords = result;
-          
+
           this.toggleEditable(this.csvRecords);
         },
         (error: NgxCSVParserError) => {

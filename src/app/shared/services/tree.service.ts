@@ -11,12 +11,12 @@ import { ThisReceiver } from '@angular/compiler';
 import { map,of } from 'rxjs';
 import firebase from 'firebase/compat/app'
 import 'firebase/compat/database'
-import { Post } from './post';
+import { Post } from '../models/post';
 import { rawListeners } from 'process';
-import { User } from './user';
+import { User } from '../models/user';
 import { UiMessagesComponent } from 'src/app/components/ui-messages/ui-messages.component';
 import { MatDialog } from '@angular/material/dialog';
- 
+
 
 /**
  * Checklist database, it can build a tree structured Json object.
@@ -36,7 +36,7 @@ export class TreeService {
   subjectivescorearray!:any[]
   showsubjective:boolean=true
   constructor(public afd:AngularFireDatabase,public dialog:MatDialog) {
-   
+
   }
   UI_message(error_msg: any) {
     this.dialog.open(UiMessagesComponent, {
@@ -45,28 +45,28 @@ export class TreeService {
   }
   addtodatabase(data:any[])
   {
-       
+
       this.afd.database.ref('criteria/'+this.post.key).set(data);
-      
-     
+
+
   }
   getfromdatabase(post:Post):Observable<any[]>
-  {  
+  {
     if(post.key){
     var ref=firebase.database().ref().child('criteria').child(post.key)
     return this.afd.list(ref).snapshotChanges().pipe(
       map(changes =>
         changes.map(c =>
-          ({...c.payload.val() as Criteria}) 
+          ({...c.payload.val() as Criteria})
         )
       )
-    ) 
+    )
   }
   else
   return of([{yeah:"skata"}]);
   }
   savescore(post:Post,cand:User,ranker:string,score:any)
-  { 
+  {
     console.log(cand)
     console.log(score)
     cand.score=score
@@ -78,12 +78,12 @@ export class TreeService {
     var key=this.afd.createPushId()
     if(node.key==undefined)
     node.key=key;
-    
+
     var data={
       title:node.title,
       key:node.key,
       subjective:node.subjective,
-      score:node.score,  
+      score:node.score,
     }
    var data2= JSON.parse(JSON.stringify(data))
    console.log(data2)
@@ -94,7 +94,7 @@ export class TreeService {
    }
    else if(node.subjective==true)
    {
-    console.log("saving subjective") 
+    console.log("saving subjective")
     this.afd.list('subjectivecriteriascores/'+post.key+'/'+cand.key+'/'+node.key).remove()
     this.afd.list('subjectivecriteriascores/'+post.key+'/'+cand.key+'/'+ranker).set(node.key,data2)
     this.getsubjectiveScore(post,cand,ranker).subscribe(obj=>{this.subjectivescorearray=obj})
@@ -103,15 +103,15 @@ export class TreeService {
     //this.subjectivescorearray.push(node)
 
     console.log(this.subjectivescorearray)
-    
-    
+
+
 
    }
-    
-    
+
+
   }
-  
-  
+
+
   /*getcallRecursively(node:Criteria,snode:Criteria,post?:Post,cand?:User,ranker?:string)
   {
     if(node.subjective==true && this.subjectivescorearray && this.getOccurrence(this.subjectivescorearray,node.title!)==this.post?.Rankers.length )
@@ -120,34 +120,34 @@ export class TreeService {
       let totalPrice = this.subjectivescorearray!
       .filter(
         (item) =>
-          item.title === node.title 
+          item.title === node.title
       )
       .reduce((accumulator, item) => {
         return accumulator + item.score;
       }, 0);
         node.allvoted=true
-        node.score=totalPrice /count 
-      
+        node.score=totalPrice /count
+
   }
    if(node.title==snode.title && node.subjective==false)
    {
     node.score=snode.score
     node.key=snode.key
    }
-  
+
     if(node.children) {
       node.children.forEach((childNode:any) => {
         this.getcallRecursively(childNode,snode);
       });
     }
   }*/
-  
+
   getobjcriteriascores(post:Post,cand:User)
   {
     return this.afd.list(firebase.database().ref().child('criteriascores').child(post.key!).child(cand.key!)).snapshotChanges().pipe(
       map(changes =>
         changes.map(c =>
-          ({...c.payload.val() as Criteria[]}) 
+          ({...c.payload.val() as Criteria[]})
         )
       )
     )
@@ -158,7 +158,7 @@ export class TreeService {
     return this.afd.list(firebase.database().ref().child('subjectivecriteriascores').child(post.key!).child(cand.key!).child(ranker)).snapshotChanges().pipe(
       map(changes =>
         changes.map(c =>
-          ({...c.payload.val() as Criteria[]}) 
+          ({...c.payload.val() as Criteria[]})
         )
       )
     )
@@ -166,18 +166,18 @@ export class TreeService {
 /*  getcriteriascores(post:Post,cand:User,ranker:string)
   {
     this.showsubjective=true
-    
+
     this.afd.list(firebase.database().ref().child('subjectivecriteriascores').child(post.key!).child(cand.key!)).snapshotChanges().pipe(
       map(changes =>
         changes.map(c =>
-          ({...c.payload.val() as []}) 
+          ({...c.payload.val() as []})
         )
       )
     ).subscribe((data2:any)=>{
-      
+
     if(data2.length!=post.Rankers.length)
     this.showsubjective=false
-    
+
       if(this.showsubjective==true){
         this.post=post
         console.log('allvoted')
@@ -185,19 +185,19 @@ export class TreeService {
      this.afd.list(firebase.database().ref().child('criteriascores').child(post.key!).child(cand.key!)).snapshotChanges().pipe(
       map(changes =>
         changes.map(c =>
-          ({...c.payload.val() as Criteria[]}) 
+          ({...c.payload.val() as Criteria[]})
         )
       )
     ).subscribe(data2=>{
        data2.forEach((element:any)=>{
          data.forEach((element2:any)=>{
-           
+
             this.getcallRecursively(element2,element,post,cand,ranker)
-            
+
          })
         })
     })
-    
+
   }
   else
   {
@@ -205,38 +205,38 @@ export class TreeService {
     this.afd.list(firebase.database().ref().child('criteriascores').child(post.key!).child(cand.key!)).snapshotChanges().pipe(
       map(changes =>
         changes.map(c =>
-          ({...c.payload.val() as Criteria[]}) 
+          ({...c.payload.val() as Criteria[]})
         )
       )
     ).subscribe(data2=>{
-      
+
       data2.forEach((element:any)=>{
         data.forEach((element2:any)=>{
            this.getcallRecursively(element2,element,post,cand,ranker)
-           
+
         })
        })
    })
    this.afd.list(firebase.database().ref().child('subjectivecriteriascores').child(post.key!).child(cand.key!).child(ranker)).snapshotChanges().pipe(
     map(changes =>
       changes.map(c =>
-        ({...c.payload.val() as Criteria[]}) 
+        ({...c.payload.val() as Criteria[]})
       )
     )
   ).subscribe(data2=>{
     data2.forEach((element:any)=>{
       data.forEach((element2:any)=>{
          this.subjectivegetcallRecursively(element2,element)
-         
+
       })
-     }) 
+     })
  })
 
   }
 })
 console.log(this.tempnodes)
     return of(data)
-    
+
   }*/
   getsubjectiveScore(post:Post,cand:User,ranker:string)
   {
@@ -252,18 +252,18 @@ console.log(this.tempnodes)
   {
     var count=0;
     var cands:any[]=[]
-    var ref=firebase.database().ref().child('scores').child(post.key!)  
+    var ref=firebase.database().ref().child('scores').child(post.key!)
 
     ref.on("child_added",function (snapshot){
       cands.push(snapshot.val())
       });
    return cands
-    
+
   }
   finalizeproject(post:Post)
   {
       var bool:boolean=false
-      var ref=firebase.database().ref().child('scores').child(post.key!)  
+      var ref=firebase.database().ref().child('scores').child(post.key!)
      this.afd.list(ref).snapshotChanges().subscribe(data=>{
        if(data.length==post.Candidates.length){
        firebase.database().ref().child('projects').child(post.key!).child('Finalized').set(true)
@@ -273,19 +273,19 @@ console.log(this.tempnodes)
        {
         this.UI_message('Not all candidates have been ranked')
        }
-     })  
+     })
   }
   getCandScores(post:Post)
   {
-     
+
       var ref=firebase.database().ref().child('scores').child(post.key!)
       return this.afd.list(ref).snapshotChanges().pipe(
         map(changes =>
           changes.map(c =>
-            ({...c.payload.val() as User}) 
+            ({...c.payload.val() as User})
           )
         )
-      ) 
+      )
   }
   getCandScore(post:Post,cand:User)
   {
@@ -299,7 +299,7 @@ console.log(this.tempnodes)
      {
     this.afd.list('criteriascores/'+post.key+'/'+cand.key).remove()
     this.afd.list('subjectivecriteriascores/'+post.key+'/'+cand.key).remove()
-    
+
 }
 }
 

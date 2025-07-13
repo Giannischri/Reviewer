@@ -1,5 +1,5 @@
 import { Component, Renderer2, OnInit,Input,Inject,Output,ViewChild, ElementRef, ViewChildren,QueryList, asNativeElements } from '@angular/core';
-import { Post } from 'src/app/shared/services/post';
+import { Post } from 'src/app/shared/models/post';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { DataService } from 'src/app/shared/services/data.service';
 import { TreeService } from 'src/app/shared/services/tree.service';
@@ -12,7 +12,7 @@ import { CriteriaformComponent } from '../criteriaform/criteriaform.component';
 import { MatInputModule } from '@angular/material/input';
 import { ActivatedRoute, Router, RouterLinkWithHref } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { User } from 'src/app/shared/services/user';
+import { User } from 'src/app/shared/models/user';
 import { RatecriteriaComponent } from '../ratecriteria/ratecriteria.component';
 import { FocusMonitorDetectionMode } from '@angular/cdk/a11y';
 import { NgxCsvParser } from 'ngx-csv-parser';
@@ -35,7 +35,7 @@ export class ProjecteditdetailsComponent implements OnInit {
   @Input() post?: Post;
   @Input() cand?:User
   @Input() viewonlyability?:boolean
-  @Output() myOutput:EventEmitter<string>= new EventEmitter();  
+  @Output() myOutput:EventEmitter<string>= new EventEmitter();
 
   currentpost: Post={};
   currentcand:User={};
@@ -58,11 +58,11 @@ export class ProjecteditdetailsComponent implements OnInit {
   treeControl = new NestedTreeControl<Criteria>(node => node.children);
   treeSource = new MatTreeNestedDataSource<Criteria>();
   dataSource: BehaviorSubject<Criteria[]>;
-  constructor(public ngxcsv:NgxCsvParser,public authservice: AuthService,private dataservice:DataService,public treesrv:TreeService,public dialog:MatDialog,private route:Router,private router:ActivatedRoute,private el:ElementRef) { 
+  constructor(public ngxcsv:NgxCsvParser,public authservice: AuthService,private dataservice:DataService,public treesrv:TreeService,public dialog:MatDialog,private route:Router,private router:ActivatedRoute,private el:ElementRef) {
     this.dataSource = new BehaviorSubject<Criteria[]>([]);
-     
+
   }
-  
+
   ngOnInit(): void {
     const routeParams = this.router.snapshot.paramMap;
     this.emptycriteria=false
@@ -79,7 +79,7 @@ export class ProjecteditdetailsComponent implements OnInit {
           this.emptycriteria=true
           this.dataSource.next(data)
           this.treesrv.getCandScore(this.post!,this.cand!).subscribe(data=>{
-            this.candscore=data 
+            this.candscore=data
           this.treesrv.getsubjectiveScore(this.post!,this.cand!,this.authservice.userData.key!).subscribe(obj=>{this.treesrv.subjectivescorearray=obj})
           console.log("cands different scores sub")
           console.log(this.treesrv.subjectivescorearray)
@@ -92,7 +92,7 @@ export class ProjecteditdetailsComponent implements OnInit {
             this.getcallRecursively(element2,element)
           })
         })
-        
+
         this.treesrv.getsubcriteriascore(this.post!,this.cand!,this.authservice.userData.key!).subscribe(data3=>{
            this.subcriteria=data3
            console.log("getting subjective")
@@ -104,23 +104,23 @@ export class ProjecteditdetailsComponent implements OnInit {
            })
            this.refresh()
            this.entryscoregen()
-          
-       
-        
+
+
+
         })
-      
-      
-      }) 
+
+
+      })
     })
         });
-        
-        
-       
-       
+
+
+
+
     //this.criteriarankers=this.treesrv.getObjectiveScore(this.post!,this.cand!)
-    
-    this.vcands=this.treesrv.checkfinalization(this.post!)  
-    
+
+    this.vcands=this.treesrv.checkfinalization(this.post!)
+
     }
     console.log(this.viewonlyability)
     if(this.post!.Finalized==true && this.post?.Finalized)
@@ -132,15 +132,15 @@ export class ProjecteditdetailsComponent implements OnInit {
     }
     else{
     this.ability=''
-    } 
-   
-   
+    }
+
+
     this.dataSource.subscribe(items => {
       this.treeSource.data= [];
       this.treeSource.data = items;
-    });  
-    
-   
+    });
+
+
   }
   entryscoregen()
   {
@@ -171,12 +171,12 @@ export class ProjecteditdetailsComponent implements OnInit {
   }
   subjectivegetcallRecursively(node:Criteria,snode:Criteria)
   {
-   
+
     if(node.title==snode.title && node.subjective==true)
    {
     node.score=snode.score
     node.key=snode.key
-   
+
    }
    if(this.treesrv.subjectivescorearray && this.getOccurrence(this.treesrv.subjectivescorearray,node.title!)==this.post?.Rankers.length && node.subjective==true )
     {
@@ -186,7 +186,7 @@ export class ProjecteditdetailsComponent implements OnInit {
           node.score=0
         }
       })
-      
+
     }
     if(node.children) {
       node.children.forEach((childNode:any) => {
@@ -196,13 +196,13 @@ export class ProjecteditdetailsComponent implements OnInit {
   }
   getcallRecursively(node:Criteria,snode:Criteria,post?:Post,cand?:User,ranker?:string)
   {
-    
+
    if(node.title==snode.title && node.subjective==false)
    {
     node.score=snode.score
     node.key=snode.key
    }
-  
+
     if(node.children) {
       node.children.forEach((childNode:any) => {
         this.getcallRecursively(childNode,snode);
@@ -210,30 +210,30 @@ export class ProjecteditdetailsComponent implements OnInit {
     }
   }
   subjectivescoregeneration(node:Criteria){
-   
+
       let count = this.treesrv.subjectivescorearray!.filter((obj) => obj.title === node.title).length;
       let totalPrice = this.treesrv.subjectivescorearray!
       .filter(
         (item) =>
-          item.title === node.title 
+          item.title === node.title
       )
       .reduce((accumulator, item) => {
         return accumulator + item.score;
       }, 0);
         node.allvoted=true
         console.log(count+"  "+totalPrice)
-        node.score=+(totalPrice /count).toFixed(2) 
-      
+        node.score=+(totalPrice /count).toFixed(2)
+
   }
   autoscoregeneration(node:Criteria)
   {
-    
+
       var allowed=true
       var sumscore=0;
       if(node.children){
-        
-       node.children.forEach((element:Criteria)=>{ 
-        
+
+       node.children.forEach((element:Criteria)=>{
+
                 if(!element.score || (element.subjective==true && !element.allvoted))
                 allowed=false
                 if(element.weight!>1){
@@ -242,16 +242,16 @@ export class ProjecteditdetailsComponent implements OnInit {
                 else
                 sumscore+=element.weight!*element.score!
                 })
-              
+
       if(allowed){
-        
+
         node.score=+sumscore.toFixed(2)
         this.treesrv.savecriteriascore(this.post!,this.cand!,this.authservice.userData.key!,node)
       }
     }
-    
-    
-    
+
+
+
   }
   getOccurrence(array:any[], value:string) {
     var count = 0;
@@ -272,13 +272,13 @@ getOccurrencescore(array:any[], value:number) {
   ngOnChanges(changes: { [propName: string]: SimpleChange }): void {
     if( changes['post'] && changes['post'].previousValue != changes['post'].currentValue ) {
       this.ngOnInit()
-      
-    } 
+
+    }
     if( changes['cand'] && changes['cand'].previousValue != changes['cand'].currentValue ) {
       this.ngOnInit()
-      
-    } 
-    
+
+    }
+
   }
  refresh(){
     this.dataSource.value.forEach(element=>{
@@ -294,7 +294,7 @@ getOccurrencescore(array:any[], value:number) {
     this.changes=false
     this.treesrv.savescore(this.post!,this.cand!,this.authservice.userData.key!,-1)
     this.UI_message('Candidate Missed the interview')
-      
+
   }
   zeroalldata(node:Criteria)
   {
@@ -306,26 +306,26 @@ getOccurrencescore(array:any[], value:number) {
           this.zeroalldata(childNode);
         });
       }
-    
+
   }
   finalize()
   {
-    
+
   if(this.vcands.length==this.post?.Candidates.length){
       this.treesrv.finalizeproject(this.post!);
       this.UI_message('Project Finalized')
   }
       else
       this.UI_message('Not all candidates have been ranked.So you cant finalize it')
-  
+
   }
-  
+
   submitCriteria()
   {
-    
+
     this.treesrv.post=this.post
     this.treesrv.addtodatabase(this.dataSource.value);
-    
+
   }
   deleteCriteria()
   {
@@ -336,14 +336,14 @@ getOccurrencescore(array:any[], value:number) {
   {
      if(node.subjective==true && !node.score && node.allvoted==undefined)
      {
-      this.autoscoregeneration(node)   
+      this.autoscoregeneration(node)
      }
     if(node.children) {
-      node.children.forEach((childNode:any) => { 
+      node.children.forEach((childNode:any) => {
         this.gettempcallRecursively(childNode);
       });
     }
-  
+
   }
 
   scoregeneration(node:Criteria,input:string)
@@ -372,18 +372,18 @@ getOccurrencescore(array:any[], value:number) {
         max=node.range.max!
         min=node.range.min!
       }
-    } 
+    }
     if(node.children){
-    node.children.forEach(element=>{ 
-      
+    node.children.forEach(element=>{
+
       if(element.subjective==true  && !element.allvoted)
       allvoted=false
       if(!element.score)
       allowed=false
       if(element.weight!>1){
-        
+
       sumscore+=(element.weight!/100)*element.score!
-      
+
       }
       else
       sumscore+=element.weight!*element.score!
@@ -405,7 +405,7 @@ getOccurrencescore(array:any[], value:number) {
     }
     }
   }
-  } 
+  }
   }
   scoregeneration2(node:Criteria,input:any)
   {
@@ -415,7 +415,7 @@ getOccurrencescore(array:any[], value:number) {
     if(node.numbers!)
       {
         if(input.indexOf(':') > -1)
-        { 
+        {
           var temp:any[]=[]
            node.numbers.forEach((value:String)=>{temp.push(value.split(':')[1])})
            min=Math.min(...temp)
@@ -438,36 +438,36 @@ getOccurrencescore(array:any[], value:number) {
           max=node.range.max!
           min=node.range.min!
         }
-      } 
+      }
 
-      
+
       var normalval:number=0;
       if(node.direction=='Positive')
        normalval=(input-min)/(max-min)
       else if(node.direction=='Negative')
        normalval=(max-input)/(max-min)
-      
+
      node.score=+normalval.toFixed(2)
-     
+
      if(input==min && node.important==true)
      {
       console.log("zero cand")
       this.zerocandidate(node)
      }
-     
+
       var data:Criteria[]=this.treeSource.data
      this.treesrv.savecriteriascore(this.post!,this.cand!,this.authservice.userData.key!,node)
-    
+
       if(this.getOccurrence(this.treesrv.subjectivescorearray,node.title!)==this.post?.Rankers.length){
       node.allvoted=true
       console.log("subjectivescore generation")
       this.subjectivescoregeneration(node)
       }
-    
-     
+
+
   }
   hasChild(index: number, node: Criteria){
-    
+
     if(node.children){
     return true;
     }
@@ -475,10 +475,10 @@ getOccurrencescore(array:any[], value:number) {
     {
     return false;
     }
-    
+
   }
   hasNoContent(index: number,node: Criteria){
-    
+
     if(node.title==''){
     return true
     }
@@ -504,7 +504,7 @@ getOccurrencescore(array:any[], value:number) {
       console.log(element)
          // this.treesrv.sumcallRecursively(element,node)
     })
-  
+
   node.score=this.treesrv.objectivescore
   }*/
   zerocandidate(node:Criteria)
@@ -516,7 +516,7 @@ getOccurrencescore(array:any[], value:number) {
   this.candscore=0
   this.treesrv.savescore(this.post!,this.cand!,this.authservice.userData.key!,0)
   this.changes=false
-  return 
+  return
   }
   checkchanges(node?:Criteria,input?:any){
     this.changes=true
@@ -542,10 +542,10 @@ getOccurrencescore(array:any[], value:number) {
         this.zerocandidate(node)
         return
       }
-      
+
       else if(input.indexOf(':') > -1)
-        { 
-          
+        {
+
           var temp:any[]=[]
            node.numbers.forEach((value:String)=>{temp.push(value.split(':')[1])})
            if(input.split(':')[1]==Math.min(...temp)){
@@ -553,13 +553,13 @@ getOccurrencescore(array:any[], value:number) {
             return
            }
 
-        }   
+        }
     }
    }
-   
+
    var ancestors=this.getAncestors(this.treeSource.data,node.title!)
    var parent:Criteria=ancestors[ancestors.length-2];
-   
+
   if(input)
    this.scoregeneration2(node,input)
    if(node.children)
@@ -589,17 +589,17 @@ getOccurrencescore(array:any[], value:number) {
       sumscore=+sumscore.toFixed(2)
    this.myOutput.emit(sumscore+"")
     }
-   
+
    }
-  
+
   getAncestors(array:Criteria[], name:string):any {
     if (typeof array !== 'undefined') {
       for (let i = 0; i < array.length; i++) {
         if (array[i].title === name) {
-          
+
           return [array[i]];
         }
-        
+
         const a:Criteria[] = this.getAncestors(array[i].children!, name);
         if (a !== null) {
           a.unshift(array[i]);
@@ -609,55 +609,55 @@ getOccurrencescore(array:any[], value:number) {
     }
     return null
   }
-  
+
  weightcheck(parent:Criteria,result:any)
  {
-    
+
   var rootsum=0;
- 
+
       if(this.treeSource.data.length>1){
         rootsum=this.treeSource.data.map(item => Number(item.weight)).reduce((prev, next) => prev! + next!);
        }
        else
         rootsum=result.data.weight
-    
+
         if(rootsum!=1 && rootsum!=100){
         this.UI_message('Parent total weight isnt 1 or 100')
         this.parentweightwarn=true
-        
+
         }
         else
         this.parentweightwarn=false
 
        var sum2=0
         if(parent?.children){
-        sum2=parent!.children.map(item=> Number(item.weight)).reduce((prev, next) => prev! + next!) 
+        sum2=parent!.children.map(item=> Number(item.weight)).reduce((prev, next) => prev! + next!)
         if(sum2!=1 && sum2!=100){
         this.UI_message("children total weight isnt 1 or 100")
         this.childrenweightwarn=true
-        
+
         }
         else
         this.childrenweightwarn=false
         }
-        
+
  }
-  
+
   openDialog(parent?:Criteria,edit?:boolean) {
-   
-  
+
+
     let dialogRef = this.dialog.open(CriteriaformComponent,{
       data: {
-        
+
         action:'add',
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      
-    
+
+
       if (parent) {
-        
+
         parent.children = [
           ...(parent.children || []),
           result.data
@@ -666,33 +666,33 @@ getOccurrencescore(array:any[], value:number) {
           this.treeControl.expand(parent);
         }
       }
-    
+
       else {
-        
+
         this.dataSource.next([
           ...this.dataSource.value,
           result.data
         ]);
       }
-      
+
       this.dataSource.next(this.dataSource.value);
       this.weightcheck(parent!,result)
       if(this.parentweightwarn==false && this.childrenweightwarn==false)
       this.submitCriteria()
     });
-    
+
   }
   openDialog2(parent:Criteria)
   {
-    
+
     const dialogRef = this.dialog.open(CriteriaformComponent,{
       data: {
         parent
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-      
-      
+
+
       if(result){
      parent.weight=result.data.weight
      parent.title=result.data.title
@@ -705,11 +705,11 @@ getOccurrencescore(array:any[], value:number) {
       }
       console.log('open dialog2')
       this.dataSource.next(this.dataSource.value)
-    this.weightcheck(parent!,result)  
+    this.weightcheck(parent!,result)
         if(this.parentweightwarn==false && this.childrenweightwarn==false)
         this.submitCriteria()
     })
-    
+
 
   }
 
@@ -717,7 +717,7 @@ getOccurrencescore(array:any[], value:number) {
 
   openDialog3(node:Criteria)
   {
-    
+
     const dialogRef=this.dialog.open(RatecriteriaComponent,{
       data:{
         weight:node.weight,
@@ -772,17 +772,17 @@ getOccurrencescore(array:any[], value:number) {
       console.log(error);
     }
   }
- 
-  
+
+
 }
 
- 
-  
-  
 
 
 
- 
- 
+
+
+
+
+
 
 

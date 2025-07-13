@@ -1,5 +1,5 @@
 import { Injectable, NgZone } from '@angular/core';
-import { User } from '../services/user';
+import { User } from '../models/user';
 import * as auth from 'firebase/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFireDatabase,AngularFireList,AngularFireObject } from '@angular/fire/compat/database';
@@ -16,7 +16,7 @@ import { ChooseroleComponent } from 'src/app/components/chooserole/chooserole.co
   providedIn: 'root',
 })
 export class AuthService {
-  userData: User={}; 
+  userData: User={};
   userRef: AngularFireList<User>;
   user:any;
   logged:any
@@ -29,7 +29,7 @@ export class AuthService {
     public router: Router,
     public ngZone: NgZone,
     public dialog:MatDialog
-   
+
   ) {
     this.userRef=afd.list('/users'),
     this.afAuth.authState.subscribe((user) => {
@@ -37,11 +37,11 @@ export class AuthService {
         console.log("logged bitch");
        this.ValidateToken()
        this.SetSignIn(user.email);
-       
-       
+
+
       } else {
         console.log("delog bitch");
-      
+
       }
     });
   }
@@ -61,11 +61,11 @@ export class AuthService {
     })
     return bool
   }
- 
-  
+
+
   // Sign in with email/password
   SignIn(email: string, password: string) {
-    
+
     var exists:boolean=false
     this.afd.list('users').valueChanges().subscribe(res=>{
       res.forEach((element:any)=>{
@@ -81,12 +81,12 @@ export class AuthService {
           this.GenerateToken();
           this.router.navigate(['cards'])
         });
-        
-        
-        
+
+
+
       })
       .catch((error) => {
-        
+
         if(error.code=='auth/invalid-email')
         this.UI_message('invalid email form')
           else if(error.code=='auth/user-not-found')
@@ -97,28 +97,28 @@ export class AuthService {
         this.UI_message('Too many trys please wait or change password')
         this.router.navigate(['sign-in'])
       });
-      
+
   }
   // Sign up with email/password
   SignUp(firstname:string,secondname:string,email: string, password: string,password2:string) {
-    
+
     if(password==password2){
     return this.afAuth
       .createUserWithEmailAndPassword(email, password)
       .then((result) => {
-        
-        /* Call the SendVerificaitonMail() function when new user sign 
+
+        /* Call the SendVerificaitonMail() function when new user sign
         up and returns promise */
         //this.SendVerificationMail();
-        
+
         this.SetUserData(result.user,firstname,secondname);
-        
-        
+
+
       })
       .catch((error) => {
         this.UI_message('User name already exists')
       });
-      
+
     }
     else{
       this.UI_message('Passwords dont match')
@@ -145,7 +145,7 @@ export class AuthService {
       });
   }
   // Returns true when user is looged in and email is verified
- 
+
   // Sign in with Google
   GoogleAuth() {
     return this.AuthLogin(new auth.GoogleAuthProvider()).then((res: any) => {
@@ -159,12 +159,12 @@ export class AuthService {
     return this.afAuth
       .signInWithPopup(provider)
       .then((result) => {
-        
+
         this.afd.database.ref().child("users").orderByChild("email").equalTo(result!.user!.email!).once("value",snapshot => {
-          
+
           if (snapshot.exists()){
             this.GenerateToken()
-            
+
           }
           else
           {
@@ -174,21 +174,21 @@ export class AuthService {
       });
       this.ngZone.run(() => {
         this.router.navigate(['cards']);
-        
-        
+
+
       });
       })
       .catch((error) => {
         this.UI_message(error);
       });
-      
+
   }
-  /* Setting up user data when sign in with username/password, 
-  sign up with username/password and sign in with social auth  
+  /* Setting up user data when sign in with username/password,
+  sign up with username/password and sign in with social auth
   provider in Firestore database using AngularFirestore + AngularFirestoreDocument service */
   SetUserData(user: any,firstname?:string,secondname?:string) {
-    
-    
+
+
     if(firstname!=null && secondname!=null){
       var key=this.afd.createPushId();
     const userData: User = {
@@ -206,10 +206,10 @@ export class AuthService {
       },
       emailVerified: user.emailVerified,
     };
-    
-    
+
+
    this.afd.list('/users').set(key,userData);
-   
+
      //this.afs.collection('users').add(userData);
 
   }
@@ -233,13 +233,13 @@ export class AuthService {
       emailVerified: user.emailVerified,
     };
     this.afd.list('/users').set(key,userData);
-    
-    
+
+
   }
  /* this.SendVerificationMail();
   this.ngZone.run(() => {
-    
-    
+
+
   });*/
   this.router.navigate(['sign-in']);
   }
@@ -261,7 +261,7 @@ export class AuthService {
       )
     ).subscribe(data => {
          for(var index in data)
-              { 
+              {
                 if(data[index].email==email)
                  {
                   this.userData= {
@@ -270,17 +270,17 @@ export class AuthService {
                     firstname:data[index].firstname!,
                     secondname:data[index].secondname!,
                     roles: {
-                      
+
                       admin: data[index].roles?.admin?true:false,
                       employee:{
                         editor: data[index].roles?.employee?.editor?true:false,
                         ranker: data[index].roles?.employee?.ranker?true:false,
                         simple:data[index].roles?.employee?.ranker?true:false,
                       }
-                      
+
                     },
                  }
-                
+
                 }
               }
              this.fullname=this.userData.firstname+" "+this.userData.secondname
@@ -290,14 +290,14 @@ export class AuthService {
          //  if(this.userData.roles?.employee?.editor==true && this.userData.roles?.employee?.ranker==true )
          //  this.dialog.open(ChooseroleComponent)
              }
-            
+
     });
-    
-   
+
+
     console.log(this.userData)
-    
+
   }
-  
+
   // Sign out
   SignOut() {
     return this.afAuth.signOut().then(() => {
@@ -317,10 +317,10 @@ export class AuthService {
   delete(key:string):Promise<void>{
     return this.afd.list('/users').remove(key);
   }
- 
+
   getrole(){
     let roles=localStorage.getItem('roles')?.split(',')
-   
+
     if(roles){
       if (roles![1]=='true' && roles![2]=='true')
       return 'editor+ranker'
@@ -333,15 +333,15 @@ export class AuthService {
     else if(roles![2]=='true'){
     return 'ranker'
     }
-    
+
     else {
     return 'viewer'
     }
   }
-  else 
+  else
   return 'viewer'
   }
- 
+
   get isLogged(): boolean {
     const token = localStorage.getItem('access-token');
     return (token !== null) ? true : false;
@@ -351,5 +351,5 @@ export class AuthService {
       data: error_msg
     });
   }
-  
+
 }
