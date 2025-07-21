@@ -14,7 +14,9 @@ import { ActivatedRoute, Data, Route, Router } from '@angular/router';
 // import { UiMessagesComponent } from '../ui-messages/ui-messages.component';
 import { AppComponent } from 'src/app/app.component';
 // import { ChooseroleComponent } from '../chooserole/chooserole.component';
+import {ProjectrankingComponent} from "../../projectranking/projectranking.component";
 import * as fileSaver from 'file-saver';
+import {ProjectMetaComponent} from "../../projectranking/components/project-meta/project-meta.component";
 @Component({
   selector: 'app-cards',
   templateUrl: './cards.component.html',
@@ -81,6 +83,10 @@ export class CardsComponent implements OnInit {
       },
     ];
   }
+  openProjectRankingDialog() {
+    this.dialog.open(ProjectrankingComponent, {
+      width: '800px',
+    });
   //
   // getRole(): string {
   //   return this.auth.getrole();
@@ -141,24 +147,24 @@ export class CardsComponent implements OnInit {
 
   // Actions
 
-  showcands(post: Post) {
-    // Implement show candidates logic
-    console.log('Show candidates for', post);
-  }
-
-  showrankers(post: Post) {
-    // Implement show rankers logic
-    console.log('Show rankers for', post);
-  }
-
-  insertCandidate(post: Post) {
-    // Implement candidate insertion logic
-    console.log('Insert candidate for', post);
-  }
-
-  exportcsv(post: Post) {
-    // Implement export CSV logic
-    console.log('Export CSV for', post);
-  }
-}
+//   showcands(post: Post) {
+//     // Implement show candidates logic
+//     console.log('Show candidates for', post);
+//   }
+//
+//   showrankers(post: Post) {
+//     // Implement show rankers logic
+//     console.log('Show rankers for', post);
+//   }
+//
+//   insertCandidate(post: Post) {
+//     // Implement candidate insertion logic
+//     console.log('Insert candidate for', post);
+//   }
+//
+//   exportcsv(post: Post) {
+//     // Implement export CSV logic
+//     console.log('Export CSV for', post);
+//   }
+}}
 

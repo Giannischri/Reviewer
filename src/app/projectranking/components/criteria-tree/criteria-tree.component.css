@@ -1,0 +1,14 @@
+/* Remove padding from individual nodes */
+.node-header {
+  padding-left: 0; /* reset any padding */
+}
+
+/* Indent children container only */
+.children {
+  padding-left: 32px; /* indent block of children */
+  border-left: 2px solid #ccc; /* optional visual guide */
+  margin-left: 16px; /* additional space */
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}

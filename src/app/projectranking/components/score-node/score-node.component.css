@@ -1,0 +1,25 @@
+.score-node {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  label {
+    flex: 1;
+    font-weight: 600;
+  }
+
+  input[type='number'] {
+    width: 60px;
+    padding: 0.25rem 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    transition: border-color 0.2s;
+
+    &:focus {
+      outline: none;
+      border-color: #3f51b5;
+      box-shadow: 0 0 5px #3f51b5;
+    }
+  }
+}

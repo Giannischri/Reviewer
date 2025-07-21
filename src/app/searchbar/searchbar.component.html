@@ -1,0 +1,17 @@
+<!-- search-bar.component.html -->
+<div dir="rtl"
+     fxLayout="row wrap"
+     fxLayoutAlign="start center"
+     fxLayoutGap="10px"
+     class="search-bar"
+     style="margin-bottom: 20px;">
+
+  <mat-form-field appearance="outline" fxFlex.gt-sm="50" fxFlex="100">
+    <mat-label>Project Search</mat-label>
+    <input matInput [(ngModel)]="searchTerm" placeholder="Search projects" (keyup.enter)="onSearch()" />
+    <button mat-icon-button matSuffix aria-label="Search projects" (click)="onSearch()">
+      <mat-icon>search</mat-icon>
+    </button>
+  </mat-form-field>
+
+</div>

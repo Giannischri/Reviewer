@@ -1,0 +1,15 @@
+.search-bar {
+  padding: 10px;
+  background: #fafafa;
+  border-radius: 8px;
+
+  mat-form-field {
+    min-width: 250px;
+  }
+
+  @media (max-width: 600px) {
+    mat-form-field {
+      width: 100%;
+    }
+  }
+}

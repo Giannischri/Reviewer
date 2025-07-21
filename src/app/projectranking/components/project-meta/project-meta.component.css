@@ -1,0 +1,27 @@
+.project-meta {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+
+  .project-image {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .project-info {
+    h1 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
+
+    p {
+      margin: 0;
+      font-size: 1rem;
+      color: #555;
+    }
+  }
+}

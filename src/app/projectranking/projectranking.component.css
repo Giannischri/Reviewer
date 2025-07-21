@@ -1,0 +1,18 @@
+.project-ranking-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* or a fixed height if needed */
+  gap: 16px;
+}
+
+/* Wrap criteria tree and enable horizontal scroll */
+.criteria-tree-wrapper {
+  overflow-x: auto;     /* horizontal scroll */
+  overflow-y: auto;     /* vertical scroll if needed */
+  max-height: 400px;    /* limit height so it can scroll vertically if needed */
+  border: 1px solid #ccc;
+  padding: 8px;
+  box-sizing: border-box;
+  width: 100%;
+  background: #fafafa;
+}

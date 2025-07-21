@@ -32,26 +32,20 @@
         </div>
       </mat-card-content>
 
-      <mat-card-actions>
+      <mat-card-actions fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%;">
         <div fxLayout="column" fxLayoutAlign="center center" style="width: 100%;">
-          <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center start" style="width: 100%;">
-            <button mat-raised-button color="primary" aria-label="View post">
+          <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="space-between center" style="width: 100%;">
+            <button mat-raised-button color="primary" aria-label="View post" style="flex: 1; min-width: 0;">
               View <mat-icon>pageview</mat-icon>
             </button>
 
-            <button mat-raised-button color="primary" aria-label="Project settings">
-              <mat-icon>settings</mat-icon>
-            </button>
-
-            <button mat-raised-button color="primary" aria-label="Edit post">
+            <button mat-raised-button color="primary" aria-label="Edit post" style="flex: 1; min-width: 0;">
               <mat-icon>edit</mat-icon>
             </button>
 
-            <button mat-raised-button color="primary" aria-label="Rank post">Rank</button>
+            <button mat-raised-button color="primary"  aria-label="Rank post" style="flex: 1; min-width: 0;" (click)="openProjectRankingDialog()">Rank</button>
 
-            <button mat-raised-button color="primary" aria-label="Finalize post">Finalize</button>
-
-            <button mat-raised-button color="primary" aria-label="Export post data">
+            <button mat-raised-button color="primary" aria-label="Export post data" style="flex: 1; min-width: 0;">
               <mat-icon>import_export</mat-icon>
             </button>
           </div>

@@ -1,0 +1,42 @@
+<h2>Criteria</h2>
+
+<mat-tree [dataSource]="treeSource" [treeControl]="treeControl" class="criteria-tree">
+
+  <!-- Parent Node Template -->
+  <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
+    <div class="node-header mat-tree-node">
+      <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name">
+        <mat-icon>
+          {{ treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right' }}
+        </mat-icon>
+      </button>
+      <span>{{ node.name }}</span>
+      <input
+        type="number"
+        min="0"
+        max="10"
+        step="1"
+        class="score-input"
+      />
+    </div>
+    <div class="children" *ngIf="treeControl.isExpanded(node)">
+      <ng-container matTreeNodeOutlet></ng-container>
+    </div>
+  </mat-nested-tree-node>
+
+  <!-- Leaf Node Template -->
+  <mat-tree-node *matTreeNodeDef="let node">
+    <div class="node-header">
+      <button mat-icon-button ></button>
+      <span>{{ node.name }}</span>
+      <input
+        type="number"
+        min="0"
+        max="10"
+        step="1"
+        class="score-input"
+      />
+    </div>
+  </mat-tree-node>
+
+</mat-tree>

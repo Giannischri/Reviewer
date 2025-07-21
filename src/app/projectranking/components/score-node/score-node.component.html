@@ -1,0 +1,11 @@
+<div class="score-node">
+  <label>{{ label }}</label>
+  <input
+    type="number"
+    [value]="score"
+    min="0"
+    max="10"
+    step="1"
+    (input)="updateScore($event)"
+  />
+</div>

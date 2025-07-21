@@ -63,6 +63,11 @@ import { MatTabsModule } from '@angular/material/tabs';
 // import { ChooseroleComponent } from './components/chooserole/chooserole.component';
 import {HttpClientModule} from "@angular/common/http";
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { SearchbarComponent } from './searchbar/searchbar.component';
+import { ProjectrankingComponent } from './projectranking/projectranking.component';
+import {ProjectMetaComponent} from "./projectranking/components/project-meta/project-meta.component";
+import { CriteriaTreeComponent } from './projectranking/components/criteria-tree/criteria-tree.component';
+import { ScoreNodeComponent } from './projectranking/components/score-node/score-node.component';
 
 
 
@@ -100,6 +105,11 @@ const firebaseConfig = {
     // CardsearchComponent,
     // ChooseroleComponent,
     NavbarComponent,
+    SearchbarComponent,
+    ProjectrankingComponent,
+    ProjectMetaComponent,
+    CriteriaTreeComponent,
+    ScoreNodeComponent,
   ],
   imports: [
     HttpClientModule,
