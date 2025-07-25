@@ -14,9 +14,9 @@ import { ActivatedRoute, Data, Route, Router } from '@angular/router';
 // import { UiMessagesComponent } from '../ui-messages/ui-messages.component';
 import { AppComponent } from 'src/app/app.component';
 // import { ChooseroleComponent } from '../chooserole/chooserole.component';
-import {ProjectrankingComponent} from "../../projectranking/projectranking.component";
+import {ProjectrankingComponent} from "../projectranking/projectranking.component";
 import * as fileSaver from 'file-saver';
-import {ProjectMetaComponent} from "../../projectranking/components/project-meta/project-meta.component";
+import {ProjectMetaComponent} from "../projectranking/components/project-meta/project-meta.component";
 @Component({
   selector: 'app-cards',
   templateUrl: './cards.component.html',

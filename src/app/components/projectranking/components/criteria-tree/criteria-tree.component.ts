@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { CriterionNode } from "../../../shared/models/criteria-tree-node";
+import { CriterionNode } from "../../../../shared/models/criteria-tree-node";
 import {FlatTreeControl, NestedTreeControl} from "@angular/cdk/tree";
 import {MatTreeFlattener, MatTreeFlatDataSource, MatTreeNestedDataSource} from "@angular/material/tree";
 import {signOut} from "@angular/fire/auth";

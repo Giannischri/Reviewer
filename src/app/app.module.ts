@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { NgxCsvParserModule } from 'ngx-csv-parser';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
@@ -19,7 +18,6 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatDialogModule} from '@angular/material/dialog';
 import { FormsModule,ReactiveFormsModule  } from '@angular/forms';
 import { MatInputModule} from '@angular/material/input';
-import { CoolSocialLoginButtonsModule } from '@angular-cool/social-login-buttons';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSelectModule} from '@angular/material/select';
@@ -63,11 +61,11 @@ import { MatTabsModule } from '@angular/material/tabs';
 // import { ChooseroleComponent } from './components/chooserole/chooserole.component';
 import {HttpClientModule} from "@angular/common/http";
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { SearchbarComponent } from './searchbar/searchbar.component';
-import { ProjectrankingComponent } from './projectranking/projectranking.component';
-import {ProjectMetaComponent} from "./projectranking/components/project-meta/project-meta.component";
-import { CriteriaTreeComponent } from './projectranking/components/criteria-tree/criteria-tree.component';
-import { ScoreNodeComponent } from './projectranking/components/score-node/score-node.component';
+import { SearchbarComponent } from './components/searchbar/searchbar.component';
+import { ProjectrankingComponent } from './components/projectranking/projectranking.component';
+import {ProjectMetaComponent} from "./components/projectranking/components/project-meta/project-meta.component";
+import { CriteriaTreeComponent } from './components/projectranking/components/criteria-tree/criteria-tree.component';
+import { ScoreNodeComponent } from './components/projectranking/components/score-node/score-node.component';
 
 
 
@@ -137,8 +135,6 @@ const firebaseConfig = {
     MatChipsModule,
     MatProgressSpinnerModule,
     MatSliderModule,
-    CoolSocialLoginButtonsModule,
-    NgxCsvParserModule,
     ScrollingModule,
     Ng2SearchPipeModule,
     ReactiveFormsModule,

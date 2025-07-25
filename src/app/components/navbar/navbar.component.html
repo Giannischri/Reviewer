@@ -14,8 +14,8 @@
 <!--        <a mat-button *ngIf="auth.getrole()=='admin'"   routerLink="/adminpanel" >Admin </a>-->
       </div>
       <div class="left-side-toolbar">
-        <a mat-button  routerLink='/sign-in' > Login </a>
-        <a mat-button  routerLink='/register-user' >Sign up </a>
+        <a mat-button  (click)="openLoginDialog()" > Login </a>
+        <a mat-button  (click)="openSignupDialog()" >Sign up </a>
         <!--<a mat-button *ngIf="auth.isLogged" routerLink='/userprofile'  >Profile</a>-->
         <a mat-button>Signout </a>
       </div>
